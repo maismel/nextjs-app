@@ -15,9 +15,9 @@ export const SIGNUP = gql`
     signup(auth: $auth) {
       user {
         id
-        email
       }
       access_token
+      refresh_token
     }
   }
 `;

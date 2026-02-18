@@ -3,9 +3,35 @@ import {
   InMemoryCache,
   HttpLink,
   ApolloLink,
+  Observable,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { getAccessToken } from "./authStore";
+import { refreshTokens } from "@/lib/refreshTokens";
+import { ErrorLink } from "@apollo/client/link/error";
+
+const errorLink = new ErrorLink(({ error, operation, forward }) => {
+  if (error && "statusCode" in error && error.statusCode === 401) {
+    return new Observable((observer) => {
+      refreshTokens().then((newToken) => {
+        if (!newToken) {
+          observer.error(error);
+          return;
+        }
+
+        operation.setContext(({ headers = {} }) => ({
+          headers: {
+            ...headers,
+            authorization: `Bearer ${newToken}`,
+          },
+        }));
+
+        forward(operation).subscribe(observer);
+      });
+    });
+  }
+});
+
 
 // HTTP link
 const httpLink = new HttpLink({
@@ -13,7 +39,6 @@ const httpLink = new HttpLink({
   // credentials: "include",
 });
 
-// Auth link: используем setContext (не SetContextLink)
 const authLink = setContext((_, prevContext) => {
   const token = getAccessToken();
   return {
@@ -26,7 +51,7 @@ const authLink = setContext((_, prevContext) => {
 
 // Apollo Client
 export const apolloClient = new ApolloClient({
-  link: ApolloLink.from([authLink, httpLink]),
+  link: ApolloLink.from([errorLink,authLink, httpLink]),
   cache: new InMemoryCache(),
   defaultOptions: {
     watchQuery: {

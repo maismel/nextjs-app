@@ -1,16 +1,19 @@
-import { FormUI } from "./Form";
+'use client'
+
+import { useState } from "react";
+import { setTokens } from "@/lib/authStore";
+import { setCurrUserId } from "@/lib/userStore";
 import { useSignup } from "@/features/auth/api/signup";
 import { AUTH_CONTENT } from "@/features/auth/constants/constants";
 import { validateForm } from "@/features/auth/utils/validateForm";
-import { useState } from "react";
+import { FormUI } from "./Form";
 
 export const SignupForm = () => {
-  const [signupMutate, { error }] = useSignup();
+  const [signupMutate, { error, loading }] = useSignup();
   const [formError, setFormError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
 
   const content = AUTH_CONTENT.signup;
-    const { title, subtitle, btn_frst, btn_sec } = content;
+  const { title, subtitle, btn_frst, btn_sec } = content;
 
   const handleSubmit = async (email: string, password: string) => {
     setFormError(null);
@@ -19,13 +22,12 @@ export const SignupForm = () => {
       return;
     }
 
-    setLoading(true);
-    try {
-      await signupMutate({
-        variables: { auth: { email, password } },
-      });
-    } finally {
-      setLoading(false);
+    const { data } = await signupMutate({
+      variables: { auth: { email, password } },
+    });
+    if (data) {
+      setTokens(data?.signup.access_token, data?.signup.refresh_token);
+      setCurrUserId(data?.signup.user.id);
     }
   };
 

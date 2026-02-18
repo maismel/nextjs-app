@@ -1,9 +1,9 @@
 "use client";
 
+import { JSX, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LoginForm } from "@/features/auth/components/LoginForm";
 import { SignupForm } from "@/features/auth/components/SignupForm";
-import { JSX, useState } from "react";
 
 const TABS: Record<
   "login" | "signup",

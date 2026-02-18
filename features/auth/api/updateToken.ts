@@ -9,7 +9,7 @@ type UpdateTokenArgs = {
 
 export const UPDATE_TOKEN = gql`
   mutation UpdateToken {
-    updateToken() {
+    updateToken {
       access_token
       refresh_token
     }

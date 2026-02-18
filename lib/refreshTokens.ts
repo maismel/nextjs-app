@@ -12,19 +12,16 @@ export const refreshTokens = async (): Promise<string | null> => {
     const refresh = getRefreshToken();
     if (!refresh) return null;
 
-    const res = await apolloClient.mutate<UpdateTokenArgs>({
+    const { data } = await apolloClient.mutate<UpdateTokenArgs>({
       mutation: UPDATE_TOKEN,
     });
 
-    if (!res.data?.updateToken) throw new Error("No token returned");
+    const tokens = data?.updateToken;
+    if (!tokens) throw new Error("No tokens returned");
 
-    const { access_token, refresh_token } = res.data.updateToken;
-
-    setTokens(access_token, refresh_token);
-
-    return access_token;
-  } catch (error) {
-    console.error("Error refreshing tokens:", error);
+    setTokens(tokens.access_token, tokens.refresh_token);
+    return tokens.access_token;
+  } catch (err) {
     clearTokens();
     return null;
   }

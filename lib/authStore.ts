@@ -1,5 +1,8 @@
-let accessToken: string | null = null;
-let refreshToken: string | null = null;
+let accessToken: string | null =
+  typeof window !== "undefined" ? sessionStorage.getItem("accessToken") : null;
+
+let refreshToken: string | null =
+  typeof window !== "undefined" ? sessionStorage.getItem("refreshToken") : null;
 
 export const setTokens = (access: string, refresh: string) => {
   accessToken = access;
@@ -8,13 +11,6 @@ export const setTokens = (access: string, refresh: string) => {
   if (typeof window !== "undefined") {
     sessionStorage.setItem("accessToken", access);
     sessionStorage.setItem("refreshToken", refresh);
-  }
-};
-
-export const loadTokensFromStorage = () => {
-  if (typeof window !== "undefined") {
-    accessToken = sessionStorage.getItem("accessToken");
-    refreshToken = sessionStorage.getItem("refreshToken");
   }
 };
 

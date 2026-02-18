@@ -1,29 +1,50 @@
 "use client";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Form } from "@/features/auth/components/Form";
-import { useState } from "react";
+import { LoginForm } from "@/features/auth/components/LoginForm";
+import { SignupForm } from "@/features/auth/components/SignupForm";
+import { JSX, useState } from "react";
+
+const TABS: Record<
+  "login" | "signup",
+  { label: string; component: JSX.Element }
+> = {
+  login: {
+    label: "ВОЙТИ",
+    component: <LoginForm />,
+  },
+  signup: {
+    label: "СОЗДАТЬ",
+    component: <SignupForm />,
+  },
+};
 
 export default function AuthTabs() {
-  const [tab, setTab] = useState<"login" | "signup">("login");
+  const [activeTab, setActiveTab] = useState<keyof typeof TABS>("login");
 
   return (
     <Tabs
-      value={tab}
-      onValueChange={(value) => setTab(value as "login" | "signup")}
+      value={activeTab}
+      onValueChange={(value) => setActiveTab(value as keyof typeof TABS)}
       className="w-full min-h-screen max-w-xl mx-auto flex flex-col items-center justify-between p-6"
     >
       <TabsList variant="line">
-        <TabsTrigger value="login">Войти</TabsTrigger>
-        <TabsTrigger value="signup">Создать аккаунт</TabsTrigger>
+        {Object.entries(TABS).map(([key, { label }]) => (
+          <TabsTrigger key={key} value={key}>
+            {label}
+          </TabsTrigger>
+        ))}
       </TabsList>
 
-      <TabsContent
-        value={tab}
-        className="w-full flex flex-col items-center justify-center"
-      >
-        <Form tab={tab} />
-      </TabsContent>
+      {Object.entries(TABS).map(([key, { component }]) => (
+        <TabsContent
+          key={key}
+          value={key}
+          className="w-full flex flex-col items-center justify-center"
+        >
+          {component}
+        </TabsContent>
+      ))}
     </Tabs>
   );
 }

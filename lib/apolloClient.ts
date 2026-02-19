@@ -5,7 +5,7 @@ import {
   ApolloLink,
   Observable,
 } from "@apollo/client";
-import { setContext } from "@apollo/client/link/context";
+import { SetContextLink } from "@apollo/client/link/context";
 import { getAccessToken } from "./authStore";
 import { refreshTokens } from "@/lib/refreshTokens";
 import { ErrorLink } from "@apollo/client/link/error";
@@ -39,7 +39,7 @@ const httpLink = new HttpLink({
   // credentials: "include",
 });
 
-const authLink = setContext((_, prevContext) => {
+const authLink = new SetContextLink((prevContext) => {
   const token = getAccessToken();
   return {
     headers: {

@@ -5,9 +5,11 @@ import { setTokens } from "@/lib/authStore";
 import { useSignup } from "@/features/auth/api/signup";
 import { AUTH_CONTENT } from "@/features/auth/constants/constants";
 import { validateForm } from "@/features/auth/utils/validateForm";
+import { useRouter } from "next/navigation";
 import { FormUI } from "./Form";
 
 export const SignupForm = () => {
+  const router = useRouter();
   const [signupMutate, { error, loading }] = useSignup();
   const [formError, setFormError] = useState<string | null>(null);
 
@@ -26,6 +28,7 @@ export const SignupForm = () => {
     });
     if (data) {
       setTokens(data?.signup.access_token, data?.signup.refresh_token);
+      router.push("/");
     }
   };
 

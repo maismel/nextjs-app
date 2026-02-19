@@ -4,8 +4,10 @@ import { useLogin } from "@/features/auth/api/login";
 import { AUTH_CONTENT } from "@/features/auth/constants/constants";
 import { validateForm } from "@/features/auth/utils/validateForm";
 import { FormUI } from "./Form";
+import { useRouter } from "next/navigation";
 
 export const LoginForm = () => {
+  const router = useRouter();
   const [loginQuery, { error, loading }] = useLogin();
   const [formError, setFormError] = useState<string | null>(null);
 
@@ -24,6 +26,7 @@ export const LoginForm = () => {
     });
     if (data) {
       setTokens(data?.login.access_token, data?.login.refresh_token);
+      router.push("/");
     }
   };
 

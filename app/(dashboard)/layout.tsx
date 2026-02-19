@@ -1,4 +1,4 @@
-import { Metadata } from "next/dist/lib/metadata/types/metadata-interface";
+import { Metadata } from "next";
 import { AppSidebar } from "@/components/layout/AppSidebar";
 
 export const metadata: Metadata = {

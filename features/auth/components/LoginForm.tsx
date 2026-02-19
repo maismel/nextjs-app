@@ -1,10 +1,12 @@
+"use client";
+
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { setTokens } from "@/lib/authStore";
 import { useLogin } from "@/features/auth/api/login";
 import { AUTH_CONTENT } from "@/features/auth/constants/constants";
 import { validateForm } from "@/features/auth/utils/validateForm";
 import { FormUI } from "./Form";
-import { useRouter } from "next/navigation";
 
 export const LoginForm = () => {
   const router = useRouter();
@@ -20,7 +22,7 @@ export const LoginForm = () => {
       setFormError("Please enter a valid email and password.");
       return;
     }
-    
+
     const { data } = await loginQuery({
       variables: { auth: { email, password } },
     });

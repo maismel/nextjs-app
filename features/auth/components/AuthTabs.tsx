@@ -1,50 +1,24 @@
 "use client";
 
-import { JSX, useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { LoginForm } from "@/features/auth/components/LoginForm";
-import { SignupForm } from "@/features/auth/components/SignupForm";
+import { usePathname, useRouter } from "next/navigation";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-const TABS: Record<
-  "login" | "signup",
-  { label: string; component: JSX.Element }
-> = {
-  login: {
-    label: "ВОЙТИ",
-    component: <LoginForm />,
-  },
-  signup: {
-    label: "СОЗДАТЬ",
-    component: <SignupForm />,
-  },
-};
+export const AuthTabs = () => {
+  const router = useRouter();
+  const pathname = usePathname();
 
-export default function AuthTabs() {
-  const [activeTab, setActiveTab] = useState<keyof typeof TABS>("login");
+  const initialTab = pathname?.includes("/signup") ? "signup" : "login";
 
   return (
-    <Tabs
-      value={activeTab}
-      onValueChange={(value) => setActiveTab(value as keyof typeof TABS)}
-      className="w-full min-h-screen max-w-xl mx-auto flex flex-col items-center justify-between p-6"
-    >
+    <Tabs defaultValue={initialTab} className="w-full items-center">
       <TabsList variant="line">
-        {Object.entries(TABS).map(([key, { label }]) => (
-          <TabsTrigger key={key} value={key}>
-            {label}
-          </TabsTrigger>
-        ))}
+        <TabsTrigger value="login" onClick={() => router.push("/auth/login")}>
+          ВОЙТИ
+        </TabsTrigger>
+        <TabsTrigger value="signup" onClick={() => router.push("/auth/signup")}>
+          СОЗДАТЬ
+        </TabsTrigger>
       </TabsList>
-
-      {Object.entries(TABS).map(([key, { component }]) => (
-        <TabsContent
-          key={key}
-          value={key}
-          className="w-full flex flex-col items-center justify-center"
-        >
-          {component}
-        </TabsContent>
-      ))}
     </Tabs>
   );
 }

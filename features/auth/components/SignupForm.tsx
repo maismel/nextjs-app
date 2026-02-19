@@ -1,11 +1,11 @@
-'use client'
+"use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { setTokens } from "@/lib/authStore";
 import { useSignup } from "@/features/auth/api/signup";
 import { AUTH_CONTENT } from "@/features/auth/constants/constants";
 import { validateForm } from "@/features/auth/utils/validateForm";
-import { useRouter } from "next/navigation";
 import { FormUI } from "./Form";
 
 export const SignupForm = () => {

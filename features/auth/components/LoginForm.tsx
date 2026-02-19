@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { setTokens } from "@/lib/authStore";
-import { setCurrUserId } from "@/lib/userStore";
 import { useLogin } from "@/features/auth/api/login";
 import { AUTH_CONTENT } from "@/features/auth/constants/constants";
 import { validateForm } from "@/features/auth/utils/validateForm";
@@ -25,7 +24,6 @@ export const LoginForm = () => {
     });
     if (data) {
       setTokens(data?.login.access_token, data?.login.refresh_token);
-      setCurrUserId(data?.login.user.id);
     }
   };
 

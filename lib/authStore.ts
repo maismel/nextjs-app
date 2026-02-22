@@ -1,28 +1,23 @@
-let accessToken: string | null =
-  typeof window !== "undefined" ? sessionStorage.getItem("accessToken") : null;
-
-let refreshToken: string | null =
-  typeof window !== "undefined" ? sessionStorage.getItem("refreshToken") : null;
-
 export const setTokens = (access: string, refresh: string) => {
-  accessToken = access;
-  refreshToken = refresh;
-
   if (typeof window !== "undefined") {
-    sessionStorage.setItem("accessToken", access);
-    sessionStorage.setItem("refreshToken", refresh);
+    localStorage.setItem("accessToken", access);
+    localStorage.setItem("refreshToken", refresh);
   }
 };
 
-export const getAccessToken = () => accessToken;
-export const getRefreshToken = () => refreshToken;
+export const getAccessToken = () => {
+  if (typeof window === "undefined") return null;
+  return localStorage.getItem("accessToken");
+};
+
+export const getRefreshToken = () => {
+  if (typeof window === "undefined") return null;
+  return localStorage.getItem("refreshToken");
+};
 
 export const clearTokens = () => {
-  accessToken = null;
-  refreshToken = null;
-
   if (typeof window !== "undefined") {
-    sessionStorage.removeItem("accessToken");
-    sessionStorage.removeItem("refreshToken");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
   }
 };

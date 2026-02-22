@@ -1,6 +1,6 @@
-import { apolloClient } from "./apolloClient";
+import { apolloClient } from "./apollo/apolloClient";
 import { UPDATE_TOKEN } from "@/features/auth/api/updateToken";
-import { getRefreshToken, setTokens, clearTokens } from './authStore'
+import { getRefreshToken, setTokens, clearTokens } from "./authStore";
 import { UpdateTokenResult } from "cv-graphql";
 
 type UpdateTokenArgs = {
@@ -22,8 +22,8 @@ export const refreshTokens = async (): Promise<string | null> => {
     setTokens(tokens.access_token, tokens.refresh_token);
     return tokens.access_token;
   } catch (err) {
+    console.error("Error refreshing tokens:", err);
     clearTokens();
     return null;
   }
 };
-

@@ -1,25 +1,15 @@
-import { refreshTokens } from "@/lib/refreshTokens";
 import { ErrorLink } from "@apollo/client/link/error";
-import { Observable } from "rxjs/internal/Observable";
+import { CombinedGraphQLErrors } from "@apollo/client/errors";
+import { clearTokens } from "@/lib/authStore";
 
-export const errorLink = new ErrorLink(({ error, operation, forward }) => {
-  if (error && "statusCode" in error && error.statusCode === 401) {
-    return new Observable((observer) => {
-      refreshTokens().then((newToken) => {
-        if (!newToken) {
-          observer.error(error);
-          return;
-        }
-
-        operation.setContext(({ headers = {} }) => ({
-          headers: {
-            ...headers,
-            authorization: `Bearer ${newToken}`,
-          },
-        }));
-
-        forward(operation).subscribe(observer);
-      });
-    });
+export const errorLink = new ErrorLink(({ error }) => {
+  if (error instanceof CombinedGraphQLErrors) {
+    for (const err of error.errors) {
+      if (err.extensions?.code === "UNAUTHENTICATED") {
+        console.log("UNAUTHENTICATED");
+        clearTokens();
+        window.location.href = "/auth/login";
+      }
+    }
   }
 });

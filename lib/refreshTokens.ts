@@ -1,6 +1,6 @@
 import { apolloClient } from "./apollo/apolloClient";
 import { UPDATE_TOKEN } from "@/features/auth/api/updateToken";
-import { getRefreshToken, setTokens, clearTokens } from "./authStore";
+import { setTokens, clearTokens } from "./authStore";
 import { UpdateTokenResult } from "cv-graphql";
 
 type UpdateTokenArgs = {
@@ -9,9 +9,6 @@ type UpdateTokenArgs = {
 
 export const refreshTokens = async (): Promise<string | null> => {
   try {
-    const refresh = getRefreshToken();
-    if (!refresh) return null;
-
     const { data } = await apolloClient.mutate<UpdateTokenArgs>({
       mutation: UPDATE_TOKEN,
     });

@@ -20,7 +20,7 @@ export default function ProtectedLayout({
   }, [router]);
 
   return (
-    <div className="flex flex-col lg:flex-row h-screen w-screen bg-gray-100 text-gray-900">
+    <div className="flex flex-col lg:flex-row h-screen w-screen">
       <AppSidebar />
       <div className="flex-1">{children}</div>
     </div>

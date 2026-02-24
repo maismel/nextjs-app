@@ -1,4 +1,4 @@
-import { CvsList } from "@/features/cvs/components/CvsList";
+import { CvsList } from "@/features/cvs/pages/CvsList";
 
 export const metadata = {
   title: "CRM App - Dashboard",

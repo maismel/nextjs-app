@@ -8,23 +8,34 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { ArrowDownUpIcon } from "lucide-react";
+import { RowActions } from "@/features/cvs/components/RowActions";
+import { columnOptions } from "@/features/cvs/pages/CvsList";
 
 interface CvsTableProps {
   columnNames: {
     label: string;
-    key: "name" | "education" | "email";
+    key: columnOptions;
     sortable: boolean;
   }[];
   data: {
+    id: string;
     email: string;
     name: string;
     education?: string | null;
     description: string;
   }[];
-  handleSort: (key: "name" | "education" | "email") => void;
+  handleSort: (key: columnOptions) => void;
+  onEdit: (id: string) => void;
+  onDelete: (id: string) => void;
 }
 
-export const CvsTable = ({ columnNames, data, handleSort }: CvsTableProps) => {
+export const CvsTable = ({
+  columnNames,
+  data,
+  handleSort,
+  onEdit,
+  onDelete,
+}: CvsTableProps) => {
   return (
     <Table>
       <TableHeader>
@@ -44,12 +55,15 @@ export const CvsTable = ({ columnNames, data, handleSort }: CvsTableProps) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data.map((cv, index) => (
-          <React.Fragment key={index}>
+        {data.map((cv) => (
+          <React.Fragment key={cv.id}>
             <TableRow className="border-none">
               <TableCell>{cv.name}</TableCell>
               <TableCell>{cv.education}</TableCell>
               <TableCell>{cv.email}</TableCell>
+              <TableCell className="text-right">
+                <RowActions id={cv.id} onEdit={onEdit} onDelete={onDelete} />
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell

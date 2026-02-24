@@ -5,9 +5,16 @@ import { Button } from "@/components/ui/button";
 interface CvsTableToolbarProps {
   value: string;
   onChange: (value: string) => void;
+  onButtonClick?: () => void;
+  buttonText?: string;
 }
 
-export const CvsTableToolbar = ({ value, onChange }: CvsTableToolbarProps) => {
+export const CvsTableToolbar = ({
+  value,
+  onChange,
+  onButtonClick,
+  buttonText,
+}: CvsTableToolbarProps) => {
   return (
     <div className="flex items-center justify-between">
       <div className="relative w-full">
@@ -19,14 +26,16 @@ export const CvsTableToolbar = ({ value, onChange }: CvsTableToolbarProps) => {
         />
         <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 p-1" />
       </div>
-      <Button
-        size="lg"
-        className="flex gap-2 items-center text-destructive"
-        onClick={() => console.log("later")}
-      >
-        <PlusIcon />
-        Create CV
-      </Button>
+      {buttonText && onButtonClick && (
+        <Button
+          size="lg"
+          className="flex gap-2 items-center text-destructive"
+          onClick={onButtonClick}
+        >
+          <PlusIcon />
+          {buttonText}
+        </Button>
+      )}
     </div>
   );
 };

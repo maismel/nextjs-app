@@ -7,6 +7,7 @@ import { useSortTable } from "@/features/cvs/hooks/useSortTable";
 import { useState } from "react";
 import { CreateCvDialog } from "@/features/cvs/components/CreateCvDialog";
 import { useCvsActions } from "@/features/cvs/hooks/useCvsActions";
+import { useRouter } from "next/navigation";
 
 export type columnOptions = "name" | "education" | "email";
 
@@ -23,6 +24,7 @@ const columnNames: {
 export const CvsList = () => {
   const { data } = useGetCvs();
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const router = useRouter();
 
   const transformed =
     data?.cvs.map(({ user, ...rest }) => ({
@@ -46,7 +48,8 @@ export const CvsList = () => {
   };
 
   const handleEdit = (id: string) => {
-    console.log("handleEdit", id);
+    router.push(`cvs/${id}/details`)
+    
   };
 
   const { handleCreateCv, handleDelete } = useCvsActions();

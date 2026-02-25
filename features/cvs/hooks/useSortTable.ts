@@ -5,6 +5,7 @@ export type SortOrder = "asc" | "desc";
 export function useSortTable<T extends object>(
   data: T[],
   defaultSortKey: keyof T,
+  searchKeys: (keyof T)[],
 ) {
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState<keyof T>(defaultSortKey);
@@ -21,11 +22,13 @@ export function useSortTable<T extends object>(
 
   const processedData = useMemo(() => {
     const filtered = data.filter((item) =>
-      Object.values(item).some(
-        (val) =>
-          typeof val === "string" &&
-          val.toLowerCase().includes(search.toLowerCase()),
-      ),
+      searchKeys.some((key) => {
+        const value = item[key];
+        return (
+          typeof value === "string" &&
+          value.toLowerCase().includes(search.toLowerCase())
+        );
+      }),
     );
 
     filtered.sort((a, b) => {
@@ -38,7 +41,7 @@ export function useSortTable<T extends object>(
     });
 
     return filtered;
-  }, [data, search, sortBy, sortOrder]);
+  }, [data, search, sortBy, sortOrder, searchKeys]);
 
   return { processedData, search, setSearch, sortBy, sortOrder, handleSort };
 }

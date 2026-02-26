@@ -4,8 +4,9 @@ import { useMemo } from "react";
 import { useGetUsers } from "../api/getUsers";
 import { useSortTable } from "@/features/cvs/hooks/useSortTable";
 import type { UserRow } from "@/features/users/types/userRow";
-import { UsersTableToolbar } from "@/features/users/components/UsersTableToolbar";
+import { CvsTableToolbar } from "@/features/shared/ui/CvsTableToolbar";
 import { UsersTable } from "@/features/users/components/UsersTable";
+import { Preloader } from "@/components/ui/Preloader";
 
 export const UsersList = () => {
   const { data, loading, error } = useGetUsers();
@@ -34,13 +35,13 @@ export const UsersList = () => {
   const { processedData, search, setSearch, sortBy, sortOrder, handleSort } =
     useSortTable(rows, "firstName", ["fullName"]);
 
-  if (loading) return <div className="py-6">Loading...</div>;
+  if (loading) return <Preloader />;
   if (error)
     return <div className="py-6 text-destructive">{error.message}</div>;
 
   return (
     <>
-      <UsersTableToolbar value={search} onChange={setSearch} />
+      <CvsTableToolbar value={search} onChange={setSearch} />
       <div className="mt-4">
         <UsersTable
           rows={processedData}

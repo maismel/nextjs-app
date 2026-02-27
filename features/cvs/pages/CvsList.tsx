@@ -2,7 +2,7 @@
 
 import { useGetCvs } from "@/features/cvs/api/getCvs";
 import { CvsTable } from "@/features/cvs/components/CvsTable";
-import { CvsTableToolbar } from "@/features/cvs/components/CvsTableToolbar";
+import { CvsTableToolbar } from "@/features/shared/ui/CvsTableToolbar";
 import { useSortTable } from "@/features/cvs/hooks/useSortTable";
 import { useState } from "react";
 import { CreateCvDialog } from "@/features/cvs/components/CreateCvDialog";
@@ -48,8 +48,7 @@ export const CvsList = () => {
   };
 
   const handleEdit = (id: string) => {
-    router.push(`cvs/${id}/details`)
-    
+    router.push(`cvs/${id}/details`);
   };
 
   const { handleCreateCv, handleDelete } = useCvsActions();

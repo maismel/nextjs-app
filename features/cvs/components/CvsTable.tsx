@@ -62,7 +62,21 @@ export const CvsTable = ({
               <TableCell>{cv.education}</TableCell>
               <TableCell>{cv.email}</TableCell>
               <TableCell className="text-right">
-                <RowActions id={cv.id} onEdit={onEdit} onDelete={onDelete} />
+                <RowActions
+                  id={cv.id}
+                  actions={[
+                    {
+                      label: "Update",
+                      onClick: onEdit,
+                    },
+                    {
+                      label: "Delete",
+                      onClick: onDelete,
+                      variant: "destructive",
+                      showSeparatorBefore: true,
+                    },
+                  ]}
+                />
               </TableCell>
             </TableRow>
             <TableRow>

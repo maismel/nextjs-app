@@ -9,17 +9,15 @@ export const useCvsActions = () => {
   const [updateCv] = useUpdateCv();
   const currUserId = getUserIdFromToken();
 
-  const handleCreateCv = async (
+  const handleCreateCv = async (input: {
     name: string,
-    education: string,
     description: string,
-  ) => {
+    education?: string,
+  }) => {
     await createCv({
       variables: {
         cv: {
-          name,
-          education,
-          description,
+          ...input,
           userId: String(currUserId),
         },
       },

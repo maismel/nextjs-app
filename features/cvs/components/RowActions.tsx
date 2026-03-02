@@ -8,13 +8,19 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+type RowAction = {
+  label: string;
+  onClick: (id: string) => void;
+  variant?: "default" | "destructive";
+  showSeparatorBefore?: boolean;
+};
+
 interface RowActionsProps {
   id: string;
-  onEdit: (id: string) => void;
-  onDelete: (id: string) => void;
+  actions: RowAction[];
 }
 
-export const RowActions = ({ id, onEdit, onDelete }: RowActionsProps) => {
+export const RowActions = ({ id, actions }: RowActionsProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -25,13 +31,17 @@ export const RowActions = ({ id, onEdit, onDelete }: RowActionsProps) => {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => onEdit(id)}>Update</DropdownMenuItem>
-
-        <DropdownMenuSeparator />
-
-        <DropdownMenuItem variant="destructive" onClick={() => onDelete(id)}>
-          Delete
-        </DropdownMenuItem>
+        {actions.map((action, index) => (
+          <div key={index}>
+            {action.showSeparatorBefore && <DropdownMenuSeparator />}
+            <DropdownMenuItem
+              variant={action.variant}
+              onClick={() => action.onClick(id)}
+            >
+              {action.label}
+            </DropdownMenuItem>
+          </div>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );

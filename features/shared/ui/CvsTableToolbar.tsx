@@ -28,6 +28,7 @@ export const CvsTableToolbar = ({
       </div>
       {buttonText && onButtonClick && (
         <Button
+          variant="ghost"
           size="lg"
           className="flex gap-2 items-center text-destructive"
           onClick={onButtonClick}

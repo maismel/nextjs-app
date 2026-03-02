@@ -1,72 +1,34 @@
-import { Button } from "@/components/ui/button";
+"use client";
+
 import {
   Dialog,
-  DialogClose,
   DialogContent,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Field, FieldGroup } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { CvForm } from "@/features/cvs/components/CvForm";
+import { useCvsActions } from "@/features/cvs/hooks/useCvsActions";
 
 interface CreateCvDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSubmit: (name: string, education: string, description: string) => void;
 }
-export const CreateCvDialog = ({
-  open,
-  onOpenChange,
-  onSubmit,
-}: CreateCvDialogProps) => {
-    
+export const CreateCvDialog = ({ open, onOpenChange }: CreateCvDialogProps) => {
+  const { handleCreateCv } = useCvsActions();
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-destructive text-center">
-            Create CV
-          </DialogTitle>
+          <DialogTitle>Create CV</DialogTitle>
         </DialogHeader>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            const formData = new FormData(e.currentTarget);
-
-            const name = formData.get("name") as string;
-            const education = formData.get("education") as string;
-            const description = formData.get("description") as string;
-
-            onSubmit(name, education, description);
+        <CvForm
+          buttonText="Create"
+          onSubmit={async (values) => {
+            await handleCreateCv(values);
             onOpenChange(false);
           }}
-        >
-          <FieldGroup>
-            <Field>
-              <Label htmlFor="name">Name</Label>
-              <Input id="name" name="name" />
-            </Field>
-            <Field>
-              <Label htmlFor="education">Education</Label>
-              <Input id="education" name="education" />
-            </Field>
-            <Field>
-              <Label htmlFor="description">Description</Label>
-              <Input id="description" name="description" />
-            </Field>
-          </FieldGroup>
-
-          <DialogFooter className="mt-8">
-            <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
-            </DialogClose>
-            <Button type="submit" variant="destructive">
-              Save changes
-            </Button>
-          </DialogFooter>
-        </form>
+          onCancelButton={() => onOpenChange(false)}
+        />
       </DialogContent>
     </Dialog>
   );

@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${roboto.className} antialiased flex h-screen w-screen bg-gray-100 text-gray-900`}
+        className={`${roboto.className} antialiased flex h-screen w-screen bg-background text-gray-900`}
       >
         <ApolloProvider client={apolloClient}>
           <main className="flex-1">{children}</main>

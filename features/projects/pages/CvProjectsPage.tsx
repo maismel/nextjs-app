@@ -2,13 +2,14 @@
 
 import { CvsTableToolbar } from "@/features/shared/ui/CvsTableToolbar";
 import { useState } from "react";
-import { useGetProjects } from "@/features/projects/api/getProjects";
 import { useSortTable } from "@/features/cvs/hooks/useSortTable";
 import { AllProjectsTable } from "@/features/projects/components/AllProjectsTable";
 import { useGetUserProjects } from "@/features/projects/api/getUserProjects";
 import { useParams } from "next/navigation";
 import { AllProjectsDialog } from "@/features/projects/components/AllProjectsDialog";
 import { useProjectActions } from "@/features/projects/hooks/useProjectActions";
+import { UpdateCvProjectInput } from "cv-graphql";
+import { UpdaterojectDialog } from "@/features/projects/components/UpdateProjectDialog";
 
 export type columnOptions = "name" | "domain" | "start_date" | "end_date";
 
@@ -25,14 +26,14 @@ const columnNames: {
 
 export const CvProjectsPage = () => {
   const { cvId } = useParams<{ cvId: string }>();
-  const { data } = useGetProjects();
-  const { data: cvData } = useGetUserProjects(cvId ?? "");
-  const { handleRemoveCvProject } = useProjectActions();
+  const { data } = useGetUserProjects(cvId ?? "");
+  const { handleUpdateCvProject, handleRemoveCvProject } = useProjectActions();
 
-  console.log("data", data?.projects);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
-
-  const userProjects = cvData?.cv.projects ?? [];
+  const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false);
+  const [projectToUpdate, setProjectToUpdate] = useState('')
+console.log("projectToUpdate", projectToUpdate);
+  const userProjects = data?.cv.projects ?? [];
   console.log("userProjects", userProjects);
 
   const searchableKeys = [
@@ -48,6 +49,18 @@ export const CvProjectsPage = () => {
 
   const openCreateModal = () => {
     setIsCreateDialogOpen(true);
+  };
+
+  const openUpdateModal = () => {
+    setIsUpdateDialogOpen(true);
+  };
+
+  const updateProject = (project: UpdateCvProjectInput) => {
+    handleUpdateCvProject({ ...project, cvId });
+  };
+  const handleUpdateClick = (id: string) => {
+    setProjectToUpdate(id);
+    setIsUpdateDialogOpen(true);
   };
 
   const removeProject = (projectId: string) => {
@@ -67,6 +80,7 @@ export const CvProjectsPage = () => {
         columnNames={columnNames}
         handleSort={handleSort}
         onDelete={removeProject}
+        onUpdate={handleUpdateClick}
       />
       {/* <CreateProjectDialog
         open={isCreateDialogOpen}
@@ -76,6 +90,11 @@ export const CvProjectsPage = () => {
       <AllProjectsDialog
         open={isCreateDialogOpen}
         onOpenChange={setIsCreateDialogOpen}
+      />
+      <UpdaterojectDialog
+        open={isUpdateDialogOpen}
+        onOpenChange={setIsUpdateDialogOpen}
+        selectedProject={projectToUpdate}
       />
     </>
   );

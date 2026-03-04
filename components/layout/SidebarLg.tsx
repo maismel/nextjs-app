@@ -29,7 +29,7 @@ export function SidebarLg({ navItems, pathname }: SidebarLgProps) {
                   <SidebarMenuItem key={item.href}>
                     <SidebarMenuButton
                       asChild
-                      isActive={pathname === item.href}
+                      isActive={pathname.startsWith(item.href)}
                       size="lg"
                     >
                       <Link

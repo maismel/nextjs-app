@@ -12,7 +12,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useState } from "react";
-import { AddProjectToCvForm } from "@/features/projects/components/AddProjectToCvForm";
+import { ProjectCvForm } from "@/features/projects/components/ProjectCvForm";
 import { useProjectActions } from "@/features/projects/hooks/useProjectActions";
 
 export type columnOptions = "name" | "domain" | "start_date" | "end_date";
@@ -77,7 +77,7 @@ export const AllProjectsDialog = ({
             />
           </>
         ) : (
-          <AddProjectToCvForm
+          <ProjectCvForm
             onCancel={() => setSelectedProject("")}
             onSubmit={(values) => {
               handleAddCvProject({

@@ -42,6 +42,7 @@ export const useCvsActions = () => {
       variables: {
         cv: input,
       },
+      refetchQueries: ["GetCv"],
     });
   };
 

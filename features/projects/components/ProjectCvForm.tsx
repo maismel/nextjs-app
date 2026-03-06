@@ -17,7 +17,7 @@ interface FormState {
   end_date?: Date | undefined;
 }
 
-export const AddProjectToCvForm = ({
+export const ProjectCvForm = ({
   onCancel,
   onSubmit,
 }: AddProjectToCvFormProps) => {

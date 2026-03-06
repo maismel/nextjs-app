@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-type RowAction = {
+export type RowAction = {
   label: string;
   onClick: (id: string) => void;
   variant?: "default" | "destructive";

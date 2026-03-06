@@ -4,6 +4,14 @@ import { useEffect, useMemo, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { AvatarUploadBlock } from "@/features/users/components/AvatarUploadBlock";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export type UserProfileFormState = {
   first_name: string;
@@ -29,9 +37,9 @@ interface Props {
 }
 
 const formatMemberSince = (createdAt: string) => {
-  const d = new Date(createdAt);
-  if (Number.isNaN(d.getTime())) return "";
-  return d.toDateString();
+  const date = new Date(createdAt);
+  if (Number.isNaN(date.getTime())) return "";
+  return date.toDateString();
 };
 
 export const UserProfileForm = ({
@@ -86,7 +94,6 @@ export const UserProfileForm = ({
           onSubmit={handleSubmit}
           className="mx-auto flex w-full max-w-[852px] flex-col items-center"
         >
-          {/* Top: avatar + upload */}
           <div className="mt-2 flex w-full justify-center">
             <AvatarUploadBlock
               avatar={avatar}
@@ -97,13 +104,12 @@ export const UserProfileForm = ({
             />
           </div>
 
-          {/* Name block */}
           <div className="mt-6 text-center">
             <div className="text-[22px] font-semibold text-foreground">
-              {fullName || "—"}
+              {fullName || "-"}
             </div>
             <div className="mt-1 text-sm text-muted-foreground">
-              {userEmail || "—"}
+              {userEmail || "-"}
             </div>
             {memberSince && (
               <div className="mt-2 text-xs text-muted-foreground">
@@ -112,7 +118,6 @@ export const UserProfileForm = ({
             )}
           </div>
 
-          {/* Form grid (410x48 inputs in figma) */}
           <div className="mt-10 grid w-full grid-cols-2 gap-x-8 gap-y-6">
             <Input
               name="first_name"
@@ -136,40 +141,51 @@ export const UserProfileForm = ({
               className="h-12 w-[410px]"
             />
 
-            <select
-              value={form.departmentId}
-              onChange={(e) =>
-                setForm((p) => ({ ...p, departmentId: e.target.value }))
+            <Select
+              value={form.departmentId || undefined}
+              onValueChange={(value) =>
+                setForm((p) => ({ ...p, departmentId: value }))
               }
               disabled={readOnly}
-              className="h-12 w-[410px] rounded-md border bg-background px-3 text-sm"
             >
-              <option value="">Department</option>
-              {departments.map((department) => (
-                <option key={department.id} value={department.id}>
-                  {department.name}
-                </option>
-              ))}
-            </select>
+              <SelectTrigger className="h-20 w-full">
+                <SelectValue placeholder="Department" />
+              </SelectTrigger>
 
-            <select
-              value={form.positionId}
-              onChange={(e) =>
-                setForm((p) => ({ ...p, positionId: e.target.value }))
+              <SelectContent position="popper" sideOffset={4}>
+                <SelectGroup>
+                  {departments.map((department) => (
+                    <SelectItem key={department.id} value={department.id}>
+                      {department.name}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+
+            <Select
+              value={form.positionId || undefined}
+              onValueChange={(value) =>
+                setForm((p) => ({ ...p, positionId: value }))
               }
               disabled={readOnly}
-              className="h-12 w-[410px] rounded-md border bg-background px-3 text-sm"
             >
-              <option value="">Position</option>
-              {positions.map((position) => (
-                <option key={position.id} value={position.id}>
-                  {position.name}
-                </option>
-              ))}
-            </select>
+              <SelectTrigger className="h-12 w-full">
+                <SelectValue placeholder="Position" />
+              </SelectTrigger>
+
+              <SelectContent position="popper" sideOffset={4}>
+                <SelectGroup>
+                  {positions.map((position) => (
+                    <SelectItem key={position.id} value={position.id}>
+                      {position.name}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
 
-          {/* Button (right, 410px wide like in mock) */}
           <div className="mt-10 flex w-full justify-end">
             <Button
               type="submit"

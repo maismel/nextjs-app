@@ -48,7 +48,6 @@ export const AvatarUploadBlock = ({
 
   return (
     <div className="flex items-center gap-10">
-      {/* единственный hidden input */}
       <Input
         id={inputId}
         type="file"
@@ -98,7 +97,6 @@ export const AvatarUploadBlock = ({
         }}
         title={disabled ? "Read-only" : "Click to upload / Drop file"}
       >
-        {/* Клик по аватару открывает picker */}
         <label
           htmlFor={inputId}
           className={disabled ? "pointer-events-none" : "cursor-pointer"}
@@ -112,7 +110,6 @@ export const AvatarUploadBlock = ({
         </label>
       </div>
 
-      {/* Блок Upload avatar image: весь блок кликабелен */}
       <label
         htmlFor={inputId}
         className={[

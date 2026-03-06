@@ -63,7 +63,6 @@ export const UserProfile = ({ userId }: { userId: string }) => {
   const user = userQ.data?.user;
   if (!user) return <div className="p-6">User not found</div>;
 
-  // TODO: readOnly по currentUser/role
   const readOnly = !(isowner || isadmin);
 
   const initialValues: UserProfileFormState = {

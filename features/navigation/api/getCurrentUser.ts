@@ -1,12 +1,12 @@
 import { gql } from "@apollo/client";
-import { useQuery } from "@apollo/client/react/compiled";
+import { useQuery } from "@apollo/client/react";
 
 interface GetCurrentUserArgs {
   userId: string;
 }
 
 interface GetCurrentUserResult {
-  currentUser: {
+  user: {
     profile: {
       full_name: string;
       avatar: string;

@@ -15,3 +15,11 @@ export const getUserIdFromToken = (): number | null => {
   const decoded = jwtDecode<TokenPayload>(token);
   return decoded.sub;
 };
+
+export const getUserRoleFromToken = (): string | null => {
+  const token = getAccessToken();
+  if (!token) return null;
+
+  const decoded = jwtDecode<TokenPayload>(token);
+  return decoded.role ?? null;
+};

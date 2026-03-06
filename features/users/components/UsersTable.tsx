@@ -30,13 +30,18 @@ interface UsersTableProps {
   sortBy: keyof UserRow;
   sortOrder: SortOrder; // asc desc
   onSort: (key: keyof UserRow) => void;
+  onRowClick?: (userId: string) => void;
 }
+const go = (userId: string, onRowClick?: (userId: string) => void) => {
+  onRowClick?.(userId);
+};
 
 export const UsersTable = ({
   rows,
   sortBy,
   sortOrder,
   onSort,
+  onRowClick,
 }: UsersTableProps) => {
   return (
     <Table>
@@ -91,11 +96,36 @@ export const UsersTable = ({
               )}
             </TableCell>
 
-            <TableCell>{user.firstName || "-"}</TableCell>
-            <TableCell>{user.lastName || "-"}</TableCell>
-            <TableCell>{user.email || "-"}</TableCell>
-            <TableCell>{user.department || "-"}</TableCell>
-            <TableCell>{user.position || "-"}</TableCell>
+            <TableCell
+              className="cursor-pointer"
+              onClick={() => go(user.id, onRowClick)}
+            >
+              {user.firstName || "-"}
+            </TableCell>
+            <TableCell
+              className="cursor-pointer"
+              onClick={() => go(user.id, onRowClick)}
+            >
+              {user.lastName || "-"}
+            </TableCell>
+            <TableCell
+              className="cursor-pointer"
+              onClick={() => go(user.id, onRowClick)}
+            >
+              {user.email || "-"}
+            </TableCell>
+            <TableCell
+              className="cursor-pointer"
+              onClick={() => go(user.id, onRowClick)}
+            >
+              {user.department || "-"}
+            </TableCell>
+            <TableCell
+              className="cursor-pointer"
+              onClick={() => go(user.id, onRowClick)}
+            >
+              {user.position || "-"}
+            </TableCell>
 
             <TableCell className="text-right text-muted-foreground">
               <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />

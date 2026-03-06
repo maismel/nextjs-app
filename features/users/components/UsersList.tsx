@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { useRouter } from "next/navigation";
 import { useGetUsers } from "../api/getUsers";
 import { useSortTable } from "@/features/cvs/hooks/useSortTable";
 import type { UserRow } from "@/features/users/types/userRow";
@@ -9,6 +10,7 @@ import { UsersTable } from "@/features/users/components/UsersTable";
 import { Preloader } from "@/components/ui/Preloader";
 
 export const UsersList = () => {
+  const router = useRouter();
   const { data, loading, error } = useGetUsers();
 
   const rows: UserRow[] = useMemo(() => {
@@ -48,6 +50,7 @@ export const UsersList = () => {
           sortBy={sortBy}
           sortOrder={sortOrder}
           onSort={handleSort}
+          onRowClick={(id) => router.push(`/users/${id}/profile`)}
         />
       </div>
     </>

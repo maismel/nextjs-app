@@ -20,14 +20,19 @@ const navItems = [
 ];
 
 export const AppSidebar = () => {
-  const currUserId = getUserIdFromToken()?.toString();
-  const { data: userData } = useGetCurrentUser(currUserId);
+  const currUserId = getUserIdFromToken()?.toString() ?? null;
+  const { data: userData } = useGetCurrentUser(currUserId ?? undefined);
   console.log("Current user data in AppSidebar:", userData);
 
   const pathname = usePathname();
   return (
     <>
-      <SidebarLg navItems={navItems} pathname={pathname} />
+      <SidebarLg
+        navItems={navItems}
+        pathname={pathname}
+        currentUserId={currUserId}
+        currentUser={userData?.user}
+      />
       <MobileNav navItems={navItems} pathname={pathname} />
     </>
   );

@@ -6,7 +6,7 @@ export default function CvDetailsLayuout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col gap-8 p-5">
+    <div className="flex flex-col gap-8">
       <CvTabsClient />
       {children}
     </div>

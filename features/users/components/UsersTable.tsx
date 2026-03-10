@@ -8,7 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ArrowDownUpIcon, ChevronRight } from "lucide-react";
-import type { SortOrder } from "@/features/cvs/hooks/useSortTable";
+import type { SortOrder } from "@/hooks/useSortTable";
 import type { UserRow } from "@/features/users/types/userRow";
 import Image from "next/image";
 

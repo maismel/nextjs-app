@@ -17,7 +17,7 @@ const PROFICIENCY_LEVELS = [
   { label: "B2", value: "B2" },
   { label: "C1", value: "C1" },
   { label: "C2", value: "C2" },
-  { label: "Native", value: "NATIVE" },
+  { label: "Native", value: "Native" },
 ];
 
 export type LanguageFormState = {
@@ -191,7 +191,8 @@ export const LanguageDialog = ({
                 <Button
                   type="submit"
                   disabled={disabled}
-                  className="h-[56px] flex-1 rounded-full border-0 bg-[#D32F2F] text-[16px] font-semibold uppercase tracking-[0.04em] text-white hover:bg-[#C62828] disabled:bg-[#7C2D2D] disabled:text-white/70"
+                  variant={"destructive"}
+                  className="h-[56px] flex-1 rounded-full border-0 text-[16px] font-semibold uppercase tracking-[0.04em]"
                 >
                   Confirm
                 </Button>

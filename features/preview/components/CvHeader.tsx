@@ -13,9 +13,9 @@ export const CvHeader = ({ user, onExport }: CvHeaderProps) => {
     <div className="flex justify-between">
       <div className="flex flex-col gap-1">
         <p className="text-3xl">
-          {user?.profile?.full_name || "Rostislav Harlanov"}
+          {user?.profile?.full_name || ""}
         </p>
-        <p className="text-lg">{user?.position_name || "Software Engineer"}</p>
+        <p className="text-lg">{user?.position_name || ""}</p>
       </div>
 
       <Button

@@ -1,7 +1,7 @@
 "use client";
 
-import { SidebarLg } from "@/components/layout/SidebarLg";
-import { MobileNav } from "@/components/layout/MobileNav";
+import { SidebarLg } from "@/features/navigation/components/SidebarLg";
+import { MobileNav } from "@/features/navigation/components/MobileNav";
 import {
   UsersIcon,
   LanguagesIcon,

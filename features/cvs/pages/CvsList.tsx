@@ -13,7 +13,7 @@ import { Preloader } from "@/components/ui/Preloader";
 
 export type columnOptions = "name" | "education" | "email";
 
-const columnNames: {
+export const columnNames: {
   label: string;
   key: columnOptions;
   sortable: boolean;
@@ -25,6 +25,7 @@ const columnNames: {
 
 export const CvsList = () => {
   const { data, loading } = useGetCvs();
+  const { handleDelete } = useCvsActions();
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [cvToDelete, setCvToDelete] = useState("");
@@ -36,15 +37,10 @@ export const CvsList = () => {
       email: user?.email ?? "",
     })) ?? [];
 
-  const searchableKeys = [
-    "name",
-    "description",
-  ] satisfies (keyof (typeof transformed)[number])[];
-
   const { processedData, search, setSearch, handleSort } = useSortTable(
     transformed,
     "name",
-    searchableKeys,
+    ["name", "description"],
   );
 
   const openCreateModal = () => {
@@ -60,7 +56,6 @@ export const CvsList = () => {
     setIsDeleteDialogOpen(true);
   };
 
-  const { handleDelete } = useCvsActions();
 
   return (
     <>

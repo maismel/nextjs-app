@@ -14,9 +14,10 @@ import {
 interface DateInputProps {
   value: Date | undefined;
   onChange: (date: Date | undefined) => void;
+  placeholder: string;
 }
 
-export function DateInput({value, onChange}: DateInputProps) {
+export function DateInput({value, onChange, placeholder}: DateInputProps) {
 
   return (
     <Popover>
@@ -27,7 +28,7 @@ export function DateInput({value, onChange}: DateInputProps) {
           className="data-[empty=true]:text-muted-foreground justify-start text-left font-normal focus-visible:border-destructive h-12 w-full px-3 py-1 rounded-none"
         >
           <CalendarIcon />
-          {value ? format(value, "yyyy-MM-dd") : <span>Pick a date</span>}
+          {value ? format(value, "yyyy-MM-dd") : <span>{placeholder}</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">

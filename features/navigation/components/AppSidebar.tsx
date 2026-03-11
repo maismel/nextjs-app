@@ -11,20 +11,25 @@ import {
 import { usePathname } from "next/navigation";
 import { useGetCurrentUser } from "@/features/navigation/api/getCurrentUser";
 import { getUserIdFromToken } from "@/helpers/getUserIdFromToken";
-
-const navItems = [
-  { label: "Employees", href: "/users", icon: <UsersIcon /> },
-  { label: "Skills", href: "/skills", icon: <TrendingUpIcon /> },
-  { label: "Languages", href: "/languages", icon: <LanguagesIcon /> },
-  { label: "CVs", href: "/cvs", icon: <FileUserIcon /> },
-];
+import { useIsClient } from "@/features/shared/hooks/useIsClient";
 
 export const AppSidebar = () => {
-  const currUserId = getUserIdFromToken()?.toString() ?? null;
-  const { data: userData } = useGetCurrentUser(currUserId ?? undefined);
-  console.log("Current user data in AppSidebar:", userData);
-
   const pathname = usePathname();
+  const isClient = useIsClient();
+
+  const currUserId = isClient
+    ? (getUserIdFromToken()?.toString() ?? null)
+    : null;
+
+  const { data: userData } = useGetCurrentUser(currUserId ?? undefined);
+
+  const navItems = [
+    { label: "Employees", href: "/users", icon: <UsersIcon /> },
+    { label: "Skills", href: "/skills", icon: <TrendingUpIcon /> },
+    { label: "Languages", href: "/languages", icon: <LanguagesIcon /> },
+    { label: "CVs", href: "/cvs", icon: <FileUserIcon /> },
+  ];
+
   return (
     <>
       <SidebarLg

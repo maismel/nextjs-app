@@ -12,7 +12,7 @@ import { RowActions } from "@/features/cvs/components/RowActions";
 import { columnOptions } from "@/features/languages/pages/LanguagesPage";
 import { Language } from "cv-graphql";
 
-interface SkillsTableProps {
+export interface SkillsTableProps {
   columnNames: {
     label: string;
     key: columnOptions;

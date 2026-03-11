@@ -7,7 +7,7 @@ import { CvsTableToolbar } from "@/features/shared/ui/CvsTableToolbar";
 
 export type columnOptions = "name" | "native_name" | "iso2";
 
-const columnNames: {
+export const columnNames: {
   label: string;
   key: columnOptions;
   sortable: boolean;
@@ -21,12 +21,10 @@ export const LanguagesPage = () => {
   const { data } = useGetLanguages();
   const allLanguages = data?.languages || [];
 
-  const searchableKeys = ["name"] satisfies columnOptions[];
-
   const { processedData, search, setSearch, handleSort } = useSortTable(
     allLanguages,
     "name",
-    searchableKeys,
+    ["name"],
   );
 
   return (

@@ -65,11 +65,13 @@ export const ProjectCvForm = ({
       <DateInput
         value={form.start_date}
         onChange={(date) => setForm((prev) => ({ ...prev, start_date: date }))}
+        placeholder="Pick start date"
       />
 
       <DateInput
         value={form.end_date}
         onChange={(date) => setForm((prev) => ({ ...prev, end_date: date }))}
+        placeholder="Pick end date"
       />
       <Input
         name="roles"

@@ -22,7 +22,6 @@ const navItems = [
 export const AppSidebar = () => {
   const currUserId = getUserIdFromToken()?.toString() ?? null;
   const { data: userData } = useGetCurrentUser(currUserId ?? undefined);
-  console.log("Current user data in AppSidebar:", userData);
 
   const pathname = usePathname();
   return (

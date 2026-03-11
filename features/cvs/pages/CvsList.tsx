@@ -3,12 +3,13 @@
 import { useGetCvs } from "@/features/cvs/api/getCvs";
 import { CvsTable } from "@/features/cvs/components/CvsTable";
 import { CvsTableToolbar } from "@/features/shared/ui/CvsTableToolbar";
-import { useSortTable } from "@/features/cvs/hooks/useSortTable";
+import { useSortTable } from "@/hooks/useSortTable";
 import { useState } from "react";
 import { CreateCvDialog } from "@/features/cvs/components/CreateCvDialog";
 import { useCvsActions } from "@/features/cvs/hooks/useCvsActions";
 import { useRouter } from "next/navigation";
 import { DeleteCvDialog } from "@/features/cvs/components/DeleteCvDialog";
+import { Preloader } from "@/components/ui/Preloader";
 
 export type columnOptions = "name" | "education" | "email";
 
@@ -23,7 +24,7 @@ const columnNames: {
 ];
 
 export const CvsList = () => {
-  const { data } = useGetCvs();
+  const { data, loading } = useGetCvs();
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [cvToDelete, setCvToDelete] = useState("");
@@ -56,13 +57,14 @@ export const CvsList = () => {
 
   const openDeleteModal = (id: string) => {
     setCvToDelete(id);
-    setIsDeleteDialogOpen(true)
+    setIsDeleteDialogOpen(true);
   };
 
   const { handleDelete } = useCvsActions();
 
   return (
     <>
+      {loading && <Preloader />}
       <CvsTableToolbar
         value={search}
         onChange={setSearch}

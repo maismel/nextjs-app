@@ -30,19 +30,21 @@ export const RowActions = ({ id, actions }: RowActionsProps) => {
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="end">
-        {actions.map((action, index) => (
-          <div key={index}>
-            {action.showSeparatorBefore && <DropdownMenuSeparator />}
-            <DropdownMenuItem
-              variant={action.variant}
-              onClick={() => action.onClick(id)}
-            >
-              {action.label}
-            </DropdownMenuItem>
-          </div>
-        ))}
-      </DropdownMenuContent>
+      {actions.length > 0 && (
+        <DropdownMenuContent align="end">
+          {actions.map((action, index) => (
+            <div key={index}>
+              {action.showSeparatorBefore && <DropdownMenuSeparator />}
+              <DropdownMenuItem
+                variant={action.variant}
+                onClick={() => action.onClick(id)}
+              >
+                {action.label}
+              </DropdownMenuItem>
+            </div>
+          ))}
+        </DropdownMenuContent>
+      )}
     </DropdownMenu>
   );
 };

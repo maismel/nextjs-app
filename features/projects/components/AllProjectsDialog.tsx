@@ -2,7 +2,7 @@
 
 import { CvsTableToolbar } from "@/features/shared/ui/CvsTableToolbar";
 import { useGetProjects } from "@/features/projects/api/getProjects";
-import { useSortTable } from "@/features/cvs/hooks/useSortTable";
+import { useSortTable } from "@/hooks/useSortTable";
 import { AllProjectsTable } from "@/features/projects/components/AllProjectsTable";
 import { useParams } from "next/navigation";
 import {
@@ -40,8 +40,6 @@ export const AllProjectsDialog = ({
   const { cvId } = useParams<{ cvId: string }>();
   const { data } = useGetProjects();
   const { handleAddCvProject } = useProjectActions();
-  console.log("data", data?.projects);
-  console.log("cvId", cvId);
 
   const [selectedProject, setSelectedProject] = useState("");
 

@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useGetUsers } from "../api/getUsers";
-import { useSortTable } from "@/features/cvs/hooks/useSortTable";
+import { useSortTable } from "@/hooks/useSortTable";
 import type { UserRow } from "@/features/users/types/userRow";
 import { CvsTableToolbar } from "@/features/shared/ui/CvsTableToolbar";
 import { UsersTable } from "@/features/users/components/UsersTable";

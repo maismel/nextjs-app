@@ -2,7 +2,7 @@
 
 import { CvsTableToolbar } from "@/features/shared/ui/CvsTableToolbar";
 import { useState } from "react";
-import { useSortTable } from "@/features/cvs/hooks/useSortTable";
+import { useSortTable } from "@/hooks/useSortTable";
 import { AllProjectsTable } from "@/features/projects/components/AllProjectsTable";
 import { useGetUserProjects } from "@/features/projects/api/getUserProjects";
 import { useParams } from "next/navigation";
@@ -31,10 +31,8 @@ export const CvProjectsPage = () => {
 
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false);
-  const [projectToUpdate, setProjectToUpdate] = useState('')
-console.log("projectToUpdate", projectToUpdate);
+  const [projectToUpdate, setProjectToUpdate] = useState("");
   const userProjects = data?.cv.projects ?? [];
-  console.log("userProjects", userProjects);
 
   const searchableKeys = [
     "name",
@@ -64,8 +62,8 @@ console.log("projectToUpdate", projectToUpdate);
   };
 
   const removeProject = (projectId: string) => {
-    handleRemoveCvProject({cvId, projectId})
-  }
+    handleRemoveCvProject({ cvId, projectId });
+  };
 
   return (
     <>

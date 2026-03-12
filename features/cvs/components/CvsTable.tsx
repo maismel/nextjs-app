@@ -8,7 +8,7 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { ArrowDownUpIcon } from "lucide-react";
-import { RowActions } from "@/features/cvs/components/RowActions";
+import { RowActions } from "@/features/shared/components/RowActions";
 import { columnOptions } from "@/features/cvs/pages/CvsList";
 
 interface CvsTableProps {

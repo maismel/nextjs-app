@@ -4,6 +4,7 @@ import { AddCvProjectInput } from "cv-graphql";
 import { useState } from "react";
 import { DateInput } from "@/features/shared/components/DateInput";
 import { format } from "date-fns";
+import { Label } from "@/components/ui/label";
 
 interface AddProjectToCvFormProps {
   onCancel: () => void;
@@ -61,30 +62,45 @@ export const ProjectCvForm = ({
     onSubmit(normalized);
   };
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-      <DateInput
-        value={form.start_date}
-        onChange={(date) => setForm((prev) => ({ ...prev, start_date: date }))}
-        placeholder="Pick start date"
-      />
+    <form onSubmit={handleSubmit} className="flex flex-col gap-5 mt-3">
+      <div className="w-full space-y-2">
+        <Label htmlFor="start_date">Start date</Label>
+        <DateInput
+          value={form.start_date}
+          onChange={(date) =>
+            setForm((prev) => ({ ...prev, start_date: date }))
+          }
+          placeholder="Pick start date"
+        />
+      </div>
 
-      <DateInput
-        value={form.end_date}
-        onChange={(date) => setForm((prev) => ({ ...prev, end_date: date }))}
-        placeholder="Pick end date"
-      />
-      <Input
-        name="roles"
-        placeholder="Roles"
-        value={form.roles}
-        onChange={handleChange}
-      />
-      <Input
-        name="responsibilities"
-        placeholder="Responsibilities"
-        value={form.responsibilities}
-        onChange={handleChange}
-      />
+      <div className="w-full space-y-2">
+        <Label htmlFor="end_date">End date</Label>
+        <DateInput
+          value={form.end_date}
+          onChange={(date) => setForm((prev) => ({ ...prev, end_date: date }))}
+          placeholder="Pick end date"
+        />
+      </div>
+
+      <div className="w-full space-y-2">
+        <Label htmlFor="roles">Roles</Label>
+        <Input
+          name="roles"
+          placeholder="Roles"
+          value={form.roles}
+          onChange={handleChange}
+        />
+      </div>
+      <div className="w-full space-y-2">
+        <Label htmlFor="responsibilities">Responsibilities</Label>
+        <Input
+          name="responsibilities"
+          placeholder="Responsibilities"
+          value={form.responsibilities}
+          onChange={handleChange}
+        />
+      </div>
       <div className="flex justify-end gap-8">
         <Button
           type="button"

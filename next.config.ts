@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  transpilePackages: ["cv-graphql"],
 };
 
 export default nextConfig;

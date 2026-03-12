@@ -4,7 +4,7 @@ import { columnNames } from "@/features/languages/pages/LanguagesPage";
 
 const mockHandleSort = jest.fn();
 
-jest.mock("@/features/cvs/components/RowActions", () => ({
+jest.mock("@/features/shared/components/RowActions", () => ({
   RowActions: () => <div>Actions</div>,
 }));
 

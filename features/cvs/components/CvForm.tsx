@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
+import { Label } from "@/components/ui/label";
 
 export type CvFormState = {
   name: string;
@@ -66,25 +67,34 @@ export const CvForm = ({
       onSubmit={handleSubmit}
       className="flex flex-col items-end self-end gap-9 w-full max-w-4xl"
     >
-      <Input
-        name="name"
-        placeholder="Name"
-        value={form.name}
-        onChange={handleChange}
-      />
-      <Input
-        name="education"
-        placeholder="Education"
-        value={form.education}
-        onChange={handleChange}
-      />
-      <Textarea
-        name="description"
-        placeholder="Description"
-        className="h-40 overflow-y-auto resize-none"
-        value={form.description}
-        onChange={handleChange}
-      />
+      <div className="w-full space-y-2">
+        <Label htmlFor="name">Name</Label>
+        <Input
+          name="name"
+          placeholder="Name"
+          value={form.name}
+          onChange={handleChange}
+        />
+      </div>
+      <div className="w-full space-y-2">
+        <Label htmlFor="education">Education</Label>
+        <Input
+          name="education"
+          placeholder="Education"
+          value={form.education}
+          onChange={handleChange}
+        />
+      </div>
+      <div className="w-full space-y-2">
+        <Label htmlFor="description">Description</Label>
+        <Textarea
+          name="description"
+          placeholder="Description"
+          className="h-40 overflow-y-auto resize-none"
+          value={form.description}
+          onChange={handleChange}
+        />
+      </div>
       <div className="flex justify-end gap-4 w-full">
         {onCancelButton && (
           <Button

@@ -1,14 +1,8 @@
 import { useState } from "react";
 import type { AddCvSkillInput } from "cv-graphql";
+import { Mastery } from "cv-graphql";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { AppSelect } from "@/features/shared/components/AppSelect";
 
 interface SkillOption {
   id: string;
@@ -28,14 +22,6 @@ interface SkillsFormProps {
 interface FormState {
   skillId: string;
   mastery: string;
-}
-
-enum Mastery {
-  Novice = "Novice",
-  Advanced = "Advanced",
-  Competent = "Competent",
-  Proficient = "Proficient",
-  Expert = "Expert",
 }
 
 export const masteryOptions = Object.values(Mastery);
@@ -70,51 +56,30 @@ export const SkillsForm = ({
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-      <Select
+      <AppSelect
         value={form.skillId}
-        onValueChange={(value) =>
-          setForm((prev) => ({ ...prev, skillId: value }))
-        }
+        onChange={(value) => setForm((prev) => ({ ...prev, skillId: value }))}
+        options={skills.map((s) => ({
+          value: s.id,
+          label: s.name,
+        }))}
+        placeholder="Select skill"
         disabled={!!initialValues?.categoryId}
-      >
-        <SelectTrigger aria-invalid={false} className="w-full">
-          <SelectValue placeholder="Select skill" />
-        </SelectTrigger>
-
-        <SelectContent position="popper" align="start">
-          <SelectGroup>
-            {skills.map((skill) => (
-              <SelectItem key={skill.id} value={skill.id}>
-                {skill.name}
-              </SelectItem>
-            ))}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-
-      <Select
+      />
+      <AppSelect
         value={form.mastery}
-        onValueChange={(value) =>
+        onChange={(value) =>
           setForm((prev) => ({
             ...prev,
             mastery: value as Mastery,
           }))
         }
-      >
-        <SelectTrigger className="w-full">
-          <SelectValue placeholder="Select mastery level" />
-        </SelectTrigger>
-
-        <SelectContent position="popper" align="start">
-          <SelectGroup>
-            {masteryOptions.map((level) => (
-              <SelectItem key={level} value={level}>
-                {level}
-              </SelectItem>
-            ))}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
+        options={masteryOptions.map((mastery) => ({
+          value: mastery,
+          label: mastery,
+        }))}
+        placeholder="Select mastery"
+      />
 
       <div className="w-full flex gap-4 justify-end">
         <Button

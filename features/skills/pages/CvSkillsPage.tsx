@@ -10,6 +10,7 @@ import { useGetUserSkills } from "@/features/skills/api/getUserSkills";
 import { UserSkills } from "@/features/skills/components/UserSkills";
 import { groupUserSkills } from "@/features/skills/helpers/groupUserSkills";
 import { Button } from "@/components/ui/button";
+import { ConfirmDialog } from "@/features/shared/components/ConfirmDialog";
 
 export interface SkillFormValues {
   categoryId: string;
@@ -19,11 +20,11 @@ export interface SkillFormValues {
 export const CvSkillsPage = () => {
   const { cvId } = useParams<{ cvId: string }>();
   const { data: allSkills } = useGetSkills();
-  const { data: userSkills } =
-    useGetUserSkills(cvId);
+  const { data: userSkills } = useGetUserSkills(cvId);
   const { handleAddCvSkill, handleUpdateCvSkill, handleRemoveCvSkill } =
     useSkillActions();
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [dialogState, setDialogState] = useState<{
     open: boolean;
     mode: "add" | "edit";
@@ -86,13 +87,7 @@ export const CvSkillsPage = () => {
           size="lg"
           className="flex gap-2 items-center text-destructive"
           disabled={selectedSkills.length === 0}
-          onClick={() => {
-            handleRemoveCvSkill({
-              cvId,
-              name: selectedSkills,
-            });
-            setSelectedSkills([]);
-          }}
+          onClick={() => setIsDeleteDialogOpen(true)}
         >
           <Trash2Icon />
           REMOVE SKILLS
@@ -106,6 +101,18 @@ export const CvSkillsPage = () => {
         onSubmit={
           dialogState.mode === "add" ? handleAddCvSkill : handleUpdateCvSkill
         }
+      />
+      <ConfirmDialog
+        title="Delete Skills"
+        open={isDeleteDialogOpen}
+        onOpenChange={setIsDeleteDialogOpen}
+        onConfirm={() => {
+          handleRemoveCvSkill({
+            cvId,
+            name: selectedSkills,
+          });
+          setSelectedSkills([]);
+        }}
       />
     </>
   );

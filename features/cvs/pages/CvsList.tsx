@@ -1,15 +1,15 @@
 "use client";
 
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useSortTable } from "@/hooks/useSortTable";
 import { useGetCvs } from "@/features/cvs/api/getCvs";
 import { CvsTable } from "@/features/cvs/components/CvsTable";
 import { CvsTableToolbar } from "@/features/shared/ui/CvsTableToolbar";
-import { useSortTable } from "@/hooks/useSortTable";
-import { useState } from "react";
 import { CreateCvDialog } from "@/features/cvs/components/CreateCvDialog";
 import { useCvsActions } from "@/features/cvs/hooks/useCvsActions";
-import { useRouter } from "next/navigation";
-import { DeleteCvDialog } from "@/features/cvs/components/DeleteCvDialog";
 import { Preloader } from "@/components/ui/Preloader";
+import { ConfirmDialog } from "@/features/shared/components/ConfirmDialog";
 
 export type columnOptions = "name" | "education" | "email";
 
@@ -56,7 +56,6 @@ export const CvsList = () => {
     setIsDeleteDialogOpen(true);
   };
 
-
   return (
     <>
       {loading && <Preloader />}
@@ -77,7 +76,8 @@ export const CvsList = () => {
         open={isCreateDialogOpen}
         onOpenChange={setIsCreateDialogOpen}
       />
-      <DeleteCvDialog
+      <ConfirmDialog
+        title="Delete CV"
         open={isDeleteDialogOpen}
         onOpenChange={setIsDeleteDialogOpen}
         onConfirm={() => handleDelete(cvToDelete)}

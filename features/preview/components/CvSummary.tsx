@@ -22,7 +22,7 @@ export const CvSummary = ({ name, description, education }: CvSummaryProps) => {
 
       <div className="flex flex-col gap-5 pl-6">
         <p>{name}</p>
-        <p className="break-all">{description}</p>
+        <p>{description}</p>
       </div>
     </article>
   );

@@ -6,7 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { RowActions } from "@/features/cvs/components/RowActions";
+import { RowActions } from "@/features/shared/components/RowActions";
 import { columnOptions } from "@/features/projects/pages/CvProjectsPage";
 import { ArrowDownUpIcon } from "lucide-react";
 import React from "react";
@@ -38,7 +38,7 @@ export const AllProjectsTable = ({
   handleSort,
   onAdd,
   onUpdate,
-  onDelete
+  onDelete,
 }: ProjectsTableProps) => {
   return (
     <Table>

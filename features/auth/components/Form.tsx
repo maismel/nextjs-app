@@ -55,7 +55,10 @@ export const FormUI = ({
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <PasswordInput value={password} onChange={(e) => setPassword(e.target.value)} />
+            <PasswordInput
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </div>
 
           {error && <p className="text-red-500">{error}</p>}
@@ -63,7 +66,12 @@ export const FormUI = ({
             <Button variant="destructive" type="submit" className="h-12">
               {btn_frst}
             </Button>
-            <Button variant="ghost" className="h-12 text-foreground/60">
+            <Button
+              type="button"
+              onClick={() => {}}
+              variant="ghost"
+              className="h-12 text-foreground/60"
+            >
               {btn_sec}
             </Button>
           </div>

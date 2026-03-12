@@ -10,23 +10,29 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 
-interface CreateCvDialogProps {
+interface ConfirmDialogProps {
+  title: string;
+  description?: string;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onConfirm: () => void;
 }
-export const DeleteCvDialog = ({
+export const ConfirmDialog = ({
+  title,
+  description,
   open,
   onOpenChange,
   onConfirm,
-}: CreateCvDialogProps) => {
+}: ConfirmDialogProps) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Create CV</DialogTitle>
+          <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
-        <DialogDescription>Are you sure you want to delete?</DialogDescription>
+        <DialogDescription>
+          {description ?? "Are you sure you want to delete?"}
+        </DialogDescription>
         <DialogFooter>
           <Button
             variant="ghost"
@@ -41,8 +47,8 @@ export const DeleteCvDialog = ({
             size="lg"
             className="w-40"
             onClick={() => {
-                onConfirm();
-                onOpenChange(false);
+              onConfirm();
+              onOpenChange(false);
             }}
           >
             Delete

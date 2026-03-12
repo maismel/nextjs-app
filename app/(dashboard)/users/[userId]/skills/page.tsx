@@ -8,13 +8,13 @@ export default async function Page(props: {
   const { userId } = await props.params;
 
   return (
-    <div className="p-6">
+    <>
       <UserBreadcrumbs />
       <UserTabs />
 
       <div className="mt-8">
         <UserSkills userId={userId} />
       </div>
-    </div>
+    </>
   );
 }

@@ -8,7 +8,7 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { ArrowDownUpIcon } from "lucide-react";
-import { RowActions } from "@/features/cvs/components/RowActions";
+import { RowActions } from "@/features/shared/components/RowActions";
 import { columnOptions } from "@/features/skills/pages/SkillsPage";
 
 interface SkillsTableProps {
@@ -28,7 +28,7 @@ interface SkillsTableProps {
 export const SkillsTable = ({
   columnNames,
   data,
-  handleSort
+  handleSort,
 }: SkillsTableProps) => {
   return (
     <Table>
@@ -55,10 +55,7 @@ export const SkillsTable = ({
               <TableCell>{skill.name}</TableCell>
               <TableCell>{skill.category_name}</TableCell>
               <TableCell className="text-right">
-                <RowActions
-                  id={skill.id}
-                  actions={[]}
-                />
+                <RowActions id={skill.id} actions={[]} />
               </TableCell>
             </TableRow>
           </React.Fragment>

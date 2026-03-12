@@ -8,11 +8,11 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { ArrowDownUpIcon } from "lucide-react";
-import { RowActions } from "@/features/cvs/components/RowActions";
+import { RowActions } from "@/features/shared/components/RowActions";
 import { columnOptions } from "@/features/languages/pages/LanguagesPage";
 import { Language } from "cv-graphql";
 
-export interface SkillsTableProps {
+export interface LanguagesTableProps {
   columnNames: {
     label: string;
     key: columnOptions;
@@ -26,7 +26,7 @@ export const LanguagesTable = ({
   columnNames,
   data,
   handleSort,
-}: SkillsTableProps) => {
+}: LanguagesTableProps) => {
   return (
     <Table>
       <TableHeader>

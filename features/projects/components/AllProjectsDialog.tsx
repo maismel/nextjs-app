@@ -14,6 +14,7 @@ import {
 import { useState } from "react";
 import { ProjectCvForm } from "@/features/projects/components/ProjectCvForm";
 import { useProjectActions } from "@/features/projects/hooks/useProjectActions";
+import { useGetUserProjects } from "@/features/projects/api/getUserProjects";
 
 export type columnOptions = "name" | "domain" | "start_date" | "end_date";
 
@@ -38,26 +39,41 @@ export const AllProjectsDialog = ({
   onOpenChange,
 }: CvProjectsPageProps) => {
   const { cvId } = useParams<{ cvId: string }>();
-  const { data } = useGetProjects();
+
+  const { data: cvProjectsData } = useGetUserProjects(cvId ?? "");
+  const { data: projectsData } = useGetProjects();
+
   const { handleAddCvProject } = useProjectActions();
 
   const [selectedProject, setSelectedProject] = useState("");
 
-  const projects = data?.projects ?? [];
+  const projects = projectsData?.projects ?? [];
+  const cvProjects = cvProjectsData?.cv.projects ?? [];
+  const cvProjectNames = new Set(cvProjects.map((p) => p.name));
+  const availableProjects = projects.filter(
+    (project) => !cvProjectNames.has(project.name),
+  );
 
-  const searchableKeys = [
-    "name",
-    "domain",
-  ] satisfies (keyof (typeof projects)[number])[];
+  const selectedProjectData = availableProjects.find(
+    (p) => p.id === selectedProject,
+  );
 
   const { processedData, search, setSearch, handleSort } = useSortTable(
-    projects,
+    availableProjects,
     "name",
-    searchableKeys,
+    ["name", "domain"],
   );
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog
+      open={open}
+      onOpenChange={(isOpen) => {
+        if (!isOpen) {
+          setSelectedProject("");
+        }
+        onOpenChange(isOpen);
+      }}
+    >
       <DialogContent className="lg:max-w-4xl h-[80vh] flex flex-col">
         <DialogHeader>
           <DialogTitle>
@@ -84,6 +100,16 @@ export const AllProjectsDialog = ({
                 ...values,
               });
             }}
+            projectStartDate={
+              selectedProjectData?.start_date
+                ? new Date(selectedProjectData.start_date)
+                : undefined
+            }
+            projectEndDate={
+              selectedProjectData?.end_date
+                ? new Date(selectedProjectData.end_date)
+                : undefined
+            }
           />
         )}
       </DialogContent>

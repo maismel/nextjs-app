@@ -45,7 +45,7 @@ export function SidebarLg({
       <div className="hidden lg:block">
         <SidebarProvider>
           <Sidebar variant="inset">
-            <SidebarContent className="mt-4 flex flex-col gap-4">
+            <SidebarContent className="mt-7 flex flex-col gap-4">
               <SidebarMenu className="mt-4 flex flex-col gap-4">
                 {navItems.map((item) => (
                   <SidebarMenuItem key={item.href}>

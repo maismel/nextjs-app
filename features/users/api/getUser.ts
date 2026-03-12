@@ -56,5 +56,6 @@ export const GET_USER = gql`
 export const useGetUser = (userId: string) => {
   return useQuery<GetUserData, GetUserVars>(GET_USER, {
     variables: { userId },
+    skip: !userId
   });
 };

@@ -7,7 +7,6 @@ export const metadata = {
 export default function CvsPage() {
   return (
     <>
-      <h1 className="text-sm text-muted-foreground mb-2">CVs</h1>
       <CvsList />
     </>
   );

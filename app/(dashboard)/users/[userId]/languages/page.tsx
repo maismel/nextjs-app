@@ -1,5 +1,4 @@
 import { UserTabs } from "@/features/users/components/UserTabs";
-import { UserBreadcrumbs } from "@/features/users/components/UserBreadcrubs";
 import { UserLanguages } from "@/features/users/languages/components/UserLanguages";
 
 export default async function Page(props: {
@@ -9,7 +8,6 @@ export default async function Page(props: {
 
   return (
     <>
-      <UserBreadcrumbs />
       <UserTabs />
 
       <div className="mt-8">

@@ -26,5 +26,6 @@ const GET_CV = gql`
 export const useGetCvById = (cvId: string) => {
   return useQuery<GetCvResp, GetCvArgs>(GET_CV, {
     variables: { cvId },
+    skip: !cvId,
   });
 };

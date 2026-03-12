@@ -15,10 +15,17 @@ interface DateInputProps {
   value: Date | undefined;
   onChange: (date: Date | undefined) => void;
   placeholder: string;
+  minDate?: Date;
+  maxDate?: Date;
 }
 
-export function DateInput({value, onChange, placeholder}: DateInputProps) {
-
+export function DateInput({
+  value,
+  onChange,
+  placeholder,
+  minDate,
+  maxDate,
+}: DateInputProps) {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -32,7 +39,16 @@ export function DateInput({value, onChange, placeholder}: DateInputProps) {
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
-        <Calendar mode="single" selected={value} onSelect={onChange} />
+        <Calendar
+          mode="single"
+          selected={value}
+          onSelect={onChange}
+          disabled={(date) => {
+            if (minDate && date < minDate) return true;
+            if (maxDate && date > maxDate) return true;
+            return false;
+          }}
+        />
       </PopoverContent>
     </Popover>
   );

@@ -40,17 +40,17 @@ export const SkillDialogUI = ({
 }: SkillDialogUIProps) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[680px] border border-[#4F4F4F] bg-[#2F2F2F] p-0 text-white shadow-2xl [&>button]:hidden">
+      <DialogContent className="max-w-[680px] border border-[#4F4F4F] bg-[#FFFFFF] p-0 text-black shadow-2xl [&>button]:hidden">
         <div className="px-8 pt-7 pb-8">
           <DialogHeader className="mb-8 flex flex-row items-start justify-between space-y-0">
-            <DialogTitle className="text-[22px] font-semibold text-white">
+            <DialogTitle className="text-[22px] font-semibold text-black">
               {mode === "add" ? "Add skill" : "Update skill"}
             </DialogTitle>
 
             <button
               type="button"
               onClick={() => onOpenChange(false)}
-              className="text-white/90 transition hover:text-white"
+              className="text-black/90 transition hover:text-black"
             >
               <X className="h-8 w-8" />
             </button>
@@ -65,7 +65,7 @@ export const SkillDialogUI = ({
                   value={form.name}
                   onChange={(e) => onSkillChange(e.target.value)}
                   disabled={mode === "update" || loading}
-                  className="h-[56px] w-full appearance-none border border-[#666666] bg-transparent px-4 pr-12 text-[18px] text-white outline-none disabled:cursor-not-allowed disabled:opacity-70"
+                  className="h-[56px] w-full cursor-pointer appearance-none border border-[#666666] bg-transparent px-4 pr-12 text-[18px] text-black outline-none disabled:cursor-not-allowed disabled:opacity-70"
                 >
                   <option value="" disabled className="text-black">
                     {availableSkills.length === 0
@@ -97,7 +97,7 @@ export const SkillDialogUI = ({
                   value={form.mastery}
                   onChange={(e) => onMasteryChange(e.target.value)}
                   disabled={loading}
-                  className="h-[56px] w-full appearance-none border border-[#666666] bg-transparent px-4 pr-12 text-[18px] text-white outline-none disabled:cursor-not-allowed disabled:opacity-70"
+                  className="h-[56px] w-full cursor-pointer appearance-none border border-[#666666] bg-transparent px-4 pr-12 text-[18px] text-black outline-none disabled:cursor-not-allowed disabled:opacity-70"
                 >
                   <option value="" disabled className="text-black">
                     Select mastery
@@ -124,7 +124,7 @@ export const SkillDialogUI = ({
                   variant="ghost"
                   onClick={() => onOpenChange(false)}
                   disabled={loading}
-                  className="h-[56px] flex-1 rounded-full border border-[#5A5A5A] bg-transparent text-[16px] font-semibold uppercase tracking-[0.04em] text-[#8F8F8F] hover:bg-transparent hover:text-white"
+                  className="h-[56px] flex-1 rounded-full border border-[#5A5A5A] bg-transparent text-[16px] font-semibold uppercase tracking-[0.04em] text-[#8F8F8F] hover:bg-transparent hover:text-black"
                 >
                   Cancel
                 </Button>

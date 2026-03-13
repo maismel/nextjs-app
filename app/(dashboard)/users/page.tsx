@@ -8,7 +8,6 @@ export const metadata = {
 export default function UsersPage() {
   return (
     <>
-      <h1 className="text-sm text-muted-foreground mb-2">Employees</h1>
       <UsersList />
     </>
   );

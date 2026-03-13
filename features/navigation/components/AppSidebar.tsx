@@ -13,6 +13,14 @@ import { useGetCurrentUser } from "@/features/navigation/api/getCurrentUser";
 import { getUserIdFromToken } from "@/helpers/getUserIdFromToken";
 import { useIsClient } from "@/features/shared/hooks/useIsClient";
 
+
+export const navItems = [
+  { label: "Employees", href: "/users", icon: <UsersIcon /> },
+  { label: "Skills", href: "/skills", icon: <TrendingUpIcon /> },
+  { label: "Languages", href: "/languages", icon: <LanguagesIcon /> },
+  { label: "CVs", href: "/cvs", icon: <FileUserIcon /> },
+];
+
 export const AppSidebar = () => {
   const pathname = usePathname();
   const isClient = useIsClient();
@@ -22,13 +30,6 @@ export const AppSidebar = () => {
     : null;
 
   const { data: userData } = useGetCurrentUser(currUserId ?? undefined);
-
-  const navItems = [
-    { label: "Employees", href: "/users", icon: <UsersIcon /> },
-    { label: "Skills", href: "/skills", icon: <TrendingUpIcon /> },
-    { label: "Languages", href: "/languages", icon: <LanguagesIcon /> },
-    { label: "CVs", href: "/cvs", icon: <FileUserIcon /> },
-  ];
 
   return (
     <>

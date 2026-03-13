@@ -9,6 +9,8 @@ import { Label } from "@/components/ui/label";
 interface AddProjectToCvFormProps {
   onCancel: () => void;
   onSubmit: (values: Omit<AddCvProjectInput, "cvId" | "projectId">) => void;
+  projectStartDate?: Date;
+  projectEndDate?: Date;
 }
 
 interface FormState {
@@ -21,6 +23,8 @@ interface FormState {
 export const ProjectCvForm = ({
   onCancel,
   onSubmit,
+  projectStartDate,
+  projectEndDate,
 }: AddProjectToCvFormProps) => {
   const initialState: FormState = {
     start_date: undefined,
@@ -71,6 +75,8 @@ export const ProjectCvForm = ({
             setForm((prev) => ({ ...prev, start_date: date }))
           }
           placeholder="Pick start date"
+          minDate={projectStartDate}
+          maxDate={projectEndDate}
         />
       </div>
 
@@ -80,6 +86,8 @@ export const ProjectCvForm = ({
           value={form.end_date}
           onChange={(date) => setForm((prev) => ({ ...prev, end_date: date }))}
           placeholder="Pick end date"
+          minDate={projectStartDate}
+          maxDate={projectEndDate}
         />
       </div>
 

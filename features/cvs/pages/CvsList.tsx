@@ -58,7 +58,7 @@ export const CvsList = () => {
 
   return (
     <>
-      {loading && <Preloader />}
+      <Preloader loading={loading} />
       <CvsTableToolbar
         value={search}
         onChange={setSearch}

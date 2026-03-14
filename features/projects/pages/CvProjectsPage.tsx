@@ -6,10 +6,10 @@ import { useSortTable } from "@/hooks/useSortTable";
 import { AllProjectsTable } from "@/features/projects/components/AllProjectsTable";
 import { useGetUserProjects } from "@/features/projects/api/getUserProjects";
 import { useParams } from "next/navigation";
-import { AllProjectsDialog } from "@/features/projects/components/AllProjectsDialog";
+import { AddProjectDialog } from "@/features/projects/components/AddProjectDialog";
 import { useProjectActions } from "@/features/projects/hooks/useProjectActions";
-import { UpdateCvProjectInput } from "cv-graphql";
-import { UpdaterojectDialog } from "@/features/projects/components/UpdateProjectDialog";
+import { UpdateProjectDialog } from "@/features/projects/components/UpdateProjectDialog";
+import { Preloader } from "@/components/ui/Preloader";
 
 export type columnOptions = "name" | "domain" | "start_date" | "end_date";
 
@@ -19,43 +19,31 @@ const columnNames: {
   sortable: boolean;
 }[] = [
   { label: "Name", key: "name", sortable: true },
-  { label: "Domail", key: "domain", sortable: false },
+  { label: "Domain", key: "domain", sortable: false },
   { label: "Start Date", key: "start_date", sortable: false },
   { label: "End Date", key: "end_date", sortable: false },
 ];
 
 export const CvProjectsPage = () => {
   const { cvId } = useParams<{ cvId: string }>();
-  const { data } = useGetUserProjects(cvId ?? "");
-  const { handleUpdateCvProject, handleRemoveCvProject } = useProjectActions();
+  const { data, loading } = useGetUserProjects(cvId ?? "");
+  const { handleRemoveCvProject } = useProjectActions();
 
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false);
   const [projectToUpdate, setProjectToUpdate] = useState("");
   const userProjects = data?.cv.projects ?? [];
 
-  const searchableKeys = [
-    "name",
-    "domain",
-  ] satisfies (keyof (typeof userProjects)[number])[];
-
   const { processedData, search, setSearch, handleSort } = useSortTable(
     userProjects,
     "name",
-    searchableKeys,
+    ["name", "domain"],
   );
 
   const openCreateModal = () => {
     setIsCreateDialogOpen(true);
   };
 
-  const openUpdateModal = () => {
-    setIsUpdateDialogOpen(true);
-  };
-
-  const updateProject = (project: UpdateCvProjectInput) => {
-    handleUpdateCvProject({ ...project, cvId });
-  };
   const handleUpdateClick = (id: string) => {
     setProjectToUpdate(id);
     setIsUpdateDialogOpen(true);
@@ -67,6 +55,7 @@ export const CvProjectsPage = () => {
 
   return (
     <>
+      <Preloader loading={loading} />
       <CvsTableToolbar
         value={search}
         onChange={setSearch}
@@ -80,16 +69,11 @@ export const CvProjectsPage = () => {
         onDelete={removeProject}
         onUpdate={handleUpdateClick}
       />
-      {/* <CreateProjectDialog
-        open={isCreateDialogOpen}
-        onOpenChange={setIsCreateDialogOpen}
-        onSubmit={handleCreateProject}
-      /> */}
-      <AllProjectsDialog
+      <AddProjectDialog
         open={isCreateDialogOpen}
         onOpenChange={setIsCreateDialogOpen}
       />
-      <UpdaterojectDialog
+      <UpdateProjectDialog
         open={isUpdateDialogOpen}
         onOpenChange={setIsUpdateDialogOpen}
         selectedProject={projectToUpdate}

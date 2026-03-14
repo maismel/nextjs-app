@@ -87,7 +87,7 @@ export function SidebarLg({
                 )}
 
                 <div className="min-w-0">
-                  <div className="text-sm font-medium truncate">{fullName}</div>
+                  <div className="text-sm truncate">{fullName}</div>
                   {currentUser?.email && (
                     <div className="text-xs text-muted-foreground truncate">
                       {currentUser.email}

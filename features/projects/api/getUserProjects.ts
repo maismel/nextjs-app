@@ -40,5 +40,6 @@ export const useGetUserProjects = (cvId: string) => {
     variables: {
       cvId,
     },
+    skip: !cvId
   });
 };

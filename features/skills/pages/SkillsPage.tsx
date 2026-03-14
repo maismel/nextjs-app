@@ -4,6 +4,7 @@ import { useGetSkills } from "@/features/skills/api/getSkills";
 import { CvsTableToolbar } from "@/features/shared/ui/CvsTableToolbar";
 import { useSortTable } from "@/hooks/useSortTable";
 import { SkillsTable } from "@/features/skills/components/SkillsTable";
+import { Preloader } from "@/components/ui/Preloader";
 
 export type columnOptions = "name" | "category_name";
 
@@ -17,19 +18,18 @@ const columnNames: {
 ];
 
 export const SkillsPage = () => {
-  const { data } = useGetSkills();
+  const { data, loading } = useGetSkills();
   const allSkills = data?.skills || [];
-
-  const searchableKeys = ["name"] satisfies columnOptions[];
 
   const { processedData, search, setSearch, handleSort } = useSortTable(
     allSkills,
     "name",
-    searchableKeys,
+    ["name"],
   );
 
   return (
     <>
+      <Preloader loading={loading} />
       <CvsTableToolbar value={search} onChange={setSearch} />
       <SkillsTable
         columnNames={columnNames}

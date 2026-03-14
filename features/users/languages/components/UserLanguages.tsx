@@ -42,8 +42,6 @@ export const UserLanguages = ({ userId }: { userId: string }) => {
   const userLanguages = profileData?.profile?.languages || [];
   const allLanguages = allLanguagesData?.languages || [];
 
-  if (loading) return <Preloader />;
-
   const handleOpenAdd = () => {
     if (readOnly) return;
     setDialogMode("add");
@@ -119,6 +117,7 @@ export const UserLanguages = ({ userId }: { userId: string }) => {
 
   return (
     <>
+      <Preloader loading={loading} />
       <div className="flex w-full flex-col gap-10">
         {!readOnly && (
           <div className="flex items-center justify-end gap-10">

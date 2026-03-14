@@ -25,7 +25,7 @@ export const CvDetailsPage = () => {
 
   return (
     <>
-      {loading && <Preloader />}
+      <Preloader loading={loading} />
       <CvForm
         initialValues={initialForm}
         onSubmit={(values) =>

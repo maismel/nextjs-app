@@ -57,7 +57,6 @@ export const UserProfile = ({ userId }: { userId: string }) => {
   const loading = userQ.loading || depsQ.loading || posQ.loading;
   const error = userQ.error || depsQ.error || posQ.error;
 
-  if (loading) return <Preloader />;
   if (error) return <div className="p-6 text-destructive">{error.message}</div>;
 
   const user = userQ.data?.user;
@@ -109,22 +108,25 @@ export const UserProfile = ({ userId }: { userId: string }) => {
   };
 
   return (
-    <UserProfileForm
-      userEmail={user.email}
-      avatar={user.profile?.avatar ?? null}
-      fullName={user.profile?.full_name ?? ""}
-      createdAt={user.created_at}
-      departments={depsQ.data?.departments ?? []}
-      positions={posQ.data?.positions ?? []}
-      initialValues={initialValues}
-      readOnly={readOnly}
-      loading={
-        updProfState.loading ||
-        updUserState.loading ||
-        uploadAvatarState.loading
-      }
-      onSubmit={onSubmit}
-      onUploadAvatar={onUploadAvatar}
-    />
+    <>
+      <Preloader loading={loading} />
+      <UserProfileForm
+        userEmail={user.email}
+        avatar={user.profile?.avatar ?? null}
+        fullName={user.profile?.full_name ?? ""}
+        createdAt={user.created_at}
+        departments={depsQ.data?.departments ?? []}
+        positions={posQ.data?.positions ?? []}
+        initialValues={initialValues}
+        readOnly={readOnly}
+        loading={
+          updProfState.loading ||
+          updUserState.loading ||
+          uploadAvatarState.loading
+        }
+        onSubmit={onSubmit}
+        onUploadAvatar={onUploadAvatar}
+      />
+    </>
   );
 };

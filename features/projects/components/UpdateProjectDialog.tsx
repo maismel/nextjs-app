@@ -14,7 +14,7 @@ interface UpdateProjectDialogProps {
   selectedProject: string;
 }
 
-export const UpdaterojectDialog = ({
+export const UpdateProjectDialog = ({
   open,
   onOpenChange,
   selectedProject,

@@ -12,9 +12,9 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useState } from "react";
-import { ProjectCvForm } from "@/features/projects/components/ProjectCvForm";
 import { useProjectActions } from "@/features/projects/hooks/useProjectActions";
 import { useGetUserProjects } from "@/features/projects/api/getUserProjects";
+import { ProjectForm } from "@/features/projects/components/ProjectForm";
 
 export type columnOptions = "name" | "domain" | "start_date" | "end_date";
 
@@ -34,7 +34,7 @@ interface CvProjectsPageProps {
   onOpenChange: (open: boolean) => void;
 }
 
-export const AllProjectsDialog = ({
+export const AddProjectDialog = ({
   open,
   onOpenChange,
 }: CvProjectsPageProps) => {
@@ -64,6 +64,11 @@ export const AllProjectsDialog = ({
     ["name", "domain"],
   );
 
+  const normalizedProjects = processedData.map((p) => ({
+    ...p,
+    end_date: p.end_date ?? undefined,
+  }));
+
   return (
     <Dialog
       open={open}
@@ -74,7 +79,7 @@ export const AllProjectsDialog = ({
         onOpenChange(isOpen);
       }}
     >
-      <DialogContent className="lg:max-w-4xl h-[80vh] flex flex-col">
+      <DialogContent className="lg:max-w-4xl h-[80vh] flex flex-col overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
             {selectedProject ? "Add Project Details" : "Add Project"}
@@ -84,33 +89,28 @@ export const AllProjectsDialog = ({
           <>
             <CvsTableToolbar value={search} onChange={setSearch} />
             <AllProjectsTable
-              data={processedData}
+              data={normalizedProjects}
               columnNames={columnNames}
               handleSort={handleSort}
               onAdd={setSelectedProject}
             />
           </>
         ) : (
-          <ProjectCvForm
-            onCancel={() => setSelectedProject("")}
-            onSubmit={(values) => {
-              handleAddCvProject({
-                cvId,
-                projectId: selectedProject,
-                ...values,
-              });
-            }}
-            projectStartDate={
-              selectedProjectData?.start_date
-                ? new Date(selectedProjectData.start_date)
-                : undefined
-            }
-            projectEndDate={
-              selectedProjectData?.end_date
-                ? new Date(selectedProjectData.end_date)
-                : undefined
-            }
-          />
+          <>
+            <ProjectForm
+              onCancel={() => setSelectedProject("")}
+              onSubmit={(values) => {
+                handleAddCvProject({
+                  cvId,
+                  projectId: selectedProject,
+                  ...values,
+                });
+                onOpenChange(false);
+                setSelectedProject("");
+              }}
+              projectData={selectedProjectData}
+            />
+          </>
         )}
       </DialogContent>
     </Dialog>

@@ -4,9 +4,10 @@ interface CvSummaryProps {
   name?: string;
   description?: string;
   education?: string;
+  languages?: { name: string; proficiency: string }[];
 }
 
-export const CvSummary = ({ name, description, education }: CvSummaryProps) => {
+export const CvSummary = ({ name, description, education, languages }: CvSummaryProps) => {
   return (
     <article className="grid grid-cols-[1fr_2.3fr] divide-x divide-destructive">
       <div className="flex flex-col gap-2 pr-6">
@@ -16,7 +17,17 @@ export const CvSummary = ({ name, description, education }: CvSummaryProps) => {
 
         <div>
           <p className="font-semibold">Language Proficiency</p>
-          <p>-</p>
+          {languages && languages.length > 0 ? (
+            <ul className="list-disc list-inside">
+              {languages.map((lang) => (
+                <li key={lang.name}>
+                  {lang.name} — {lang.proficiency}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>-</p>
+          )}
         </div>
       </div>
 

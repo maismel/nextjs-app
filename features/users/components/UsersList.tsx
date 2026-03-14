@@ -37,12 +37,12 @@ export const UsersList = () => {
   const { processedData, search, setSearch, sortBy, sortOrder, handleSort } =
     useSortTable(rows, "firstName", ["fullName"]);
 
-  if (loading) return <Preloader />;
   if (error)
     return <div className="py-6 text-destructive">{error.message}</div>;
 
   return (
     <>
+      <Preloader loading={loading} />
       <CvsTableToolbar value={search} onChange={setSearch} />
       <div className="mt-4">
         <UsersTable

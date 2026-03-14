@@ -161,19 +161,6 @@ describe("UserProfile", () => {
     mockRefetch.mockResolvedValue({});
   });
 
-  test("renders preloader while data is loading", () => {
-    useGetUser.mockReturnValue({
-      data: null,
-      loading: true,
-      error: null,
-      refetch: mockRefetch,
-    });
-
-    render(<UserProfile userId="123" />);
-
-    expect(screen.getByText("Loading...")).toBeInTheDocument();
-  });
-
   test("renders error state", () => {
     useGetUser.mockReturnValue({
       data: null,

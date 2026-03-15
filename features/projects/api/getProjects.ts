@@ -1,15 +1,9 @@
 import { gql } from "@apollo/client";
 import { useQuery } from "@apollo/client/react";
+import { Project } from "cv-graphql";
 
 interface GetProjectsQuery {
-  projects: {
-    id: string;
-    name: string;
-    domain: string;
-    start_date: string;
-    end_date?: string;
-    description: string;
-  }[];
+  projects: Omit<Project, "internal_name">[];
 }
 
 const GET_PROJECTS = gql`
@@ -21,6 +15,7 @@ const GET_PROJECTS = gql`
       start_date
       end_date
       description
+      environment
     }
   }
 `;

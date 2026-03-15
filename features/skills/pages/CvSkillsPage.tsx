@@ -11,6 +11,7 @@ import { UserSkills } from "@/features/skills/components/UserSkills";
 import { groupUserSkills } from "@/features/skills/helpers/groupUserSkills";
 import { Button } from "@/components/ui/button";
 import { ConfirmDialog } from "@/features/shared/components/ConfirmDialog";
+import { Preloader } from "@/components/ui/Preloader";
 
 export interface SkillFormValues {
   categoryId: string;
@@ -19,8 +20,9 @@ export interface SkillFormValues {
 
 export const CvSkillsPage = () => {
   const { cvId } = useParams<{ cvId: string }>();
-  const { data: allSkills } = useGetSkills();
-  const { data: userSkills } = useGetUserSkills(cvId);
+  const { data: allSkills, loading: allSkillsLoading } = useGetSkills();
+  const { data: userSkills, loading: userSkillsLoading } =
+    useGetUserSkills(cvId);
   const { handleAddCvSkill, handleUpdateCvSkill, handleRemoveCvSkill } =
     useSkillActions();
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
@@ -36,7 +38,6 @@ export const CvSkillsPage = () => {
 
   const allSkillsList = allSkills?.skills ?? [];
   const userSkillsList = userSkills?.cv.skills ?? [];
-
   const groupedUserSkills = groupUserSkills(allSkillsList, userSkillsList);
 
   const openAddDialog = () => {
@@ -64,6 +65,7 @@ export const CvSkillsPage = () => {
 
   return (
     <>
+      <Preloader loading={allSkillsLoading || userSkillsLoading} />
       <UserSkills
         groupedSkills={groupedUserSkills}
         selectedSkills={selectedSkills}

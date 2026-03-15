@@ -1,4 +1,3 @@
-
 import { gql } from "@apollo/client";
 import { useQuery } from "@apollo/client/react";
 import { SkillMastery } from "cv-graphql";
@@ -16,6 +15,7 @@ interface GetSkillsArgs {
 const GET_USER_SKILLS = gql`
   query GetUserSkills($cvId: ID!) {
     cv(cvId: $cvId) {
+      id
       skills {
         name
         categoryId

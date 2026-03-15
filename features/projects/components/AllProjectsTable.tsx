@@ -22,8 +22,8 @@ interface ProjectsTableProps {
     name: string;
     domain: string;
     start_date: string;
+    end_date?: string | undefined;
     description: string;
-    end_date?: string;
     roles?: string[];
   }[];
   handleSort: (key: columnOptions) => void;
@@ -73,7 +73,7 @@ export const AllProjectsTable = ({
                     ...(onAdd
                       ? [
                           {
-                            label: "Add to my CV",
+                            label: "Add Project",
                             onClick: onAdd,
                           },
                         ]
@@ -81,7 +81,7 @@ export const AllProjectsTable = ({
                     ...(onUpdate
                       ? [
                           {
-                            label: "Update CV",
+                            label: "Update Project",
                             onClick: onUpdate,
                           },
                         ]
@@ -89,8 +89,10 @@ export const AllProjectsTable = ({
                     ...(onDelete
                       ? [
                           {
-                            label: "Remove CV",
+                            label: "Remove Project",
                             onClick: onDelete,
+                            variant: "destructive" as const,
+                            showSeparatorBefore: true,
                           },
                         ]
                       : []),

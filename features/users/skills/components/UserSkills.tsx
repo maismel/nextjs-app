@@ -60,8 +60,6 @@ export const UserSkills = ({ userId }: { userId: string }) => {
       .filter((group) => group.skills.length > 0);
   }, [categories, userSkills]);
 
-  if (loading) return <Preloader />;
-
   const handleOpenAdd = () => {
     if (readOnly) return;
 
@@ -174,6 +172,7 @@ export const UserSkills = ({ userId }: { userId: string }) => {
 
   return (
     <>
+      <Preloader loading={loading} />
       <UserSkillsUI
         readOnly={readOnly}
         groupedSkills={groupedSkills}

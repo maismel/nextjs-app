@@ -25,7 +25,7 @@ export const groupUserSkills = (
 
     if (!grouped[category]) grouped[category] = [];
 
-    grouped[category].push({ ...skill, ...fullSkill });
+    grouped[category].push({ ...fullSkill, ...skill });
   });
 
   return grouped;

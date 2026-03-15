@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { ChevronLeftIcon } from "lucide-react";
 import {
   SidebarProvider,
   Sidebar,
@@ -12,6 +13,7 @@ import {
   SidebarMenuButton,
 } from "@/components/ui/sidebar";
 import { JSX } from "react/jsx-dev-runtime";
+import { Button } from "@/components/ui/button";
 
 type CurrentUser = {
   profile?: {
@@ -23,6 +25,7 @@ type CurrentUser = {
 interface SidebarLgProps {
   navItems: { label: string; href: string; icon: JSX.Element }[];
   pathname: string;
+  onLogout: () => void;
 
   currentUserId: string | null;
   currentUser?: CurrentUser;
@@ -31,6 +34,7 @@ interface SidebarLgProps {
 export function SidebarLg({
   navItems,
   pathname,
+  onLogout,
   currentUser,
   currentUserId,
 }: SidebarLgProps & { currentUser?: CurrentUser }) {
@@ -67,7 +71,7 @@ export function SidebarLg({
                 ))}
               </SidebarMenu>
             </SidebarContent>
-            <SidebarFooter className="px-3 pb-3">
+            <SidebarFooter className="px-3 pb-3 flex flex-col gap-2">
               <Link
                 href={profileHref}
                 className="flex items-center gap-3 rounded-xl px-3 py-2 hover:bg-muted transition-colors"
@@ -87,7 +91,7 @@ export function SidebarLg({
                 )}
 
                 <div className="min-w-0">
-                  <div className="text-sm font-medium truncate">{fullName}</div>
+                  <div className="text-sm truncate">{fullName}</div>
                   {currentUser?.email && (
                     <div className="text-xs text-muted-foreground truncate">
                       {currentUser.email}
@@ -95,6 +99,13 @@ export function SidebarLg({
                   )}
                 </div>
               </Link>
+              <Button
+                variant="ghost"
+                className="text-muted-foreground flex justify-start"
+                onClick={onLogout}
+              >
+                <ChevronLeftIcon />
+              </Button>
             </SidebarFooter>
           </Sidebar>
         </SidebarProvider>

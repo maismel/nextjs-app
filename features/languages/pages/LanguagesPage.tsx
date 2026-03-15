@@ -4,6 +4,7 @@ import { useSortTable } from "@/hooks/useSortTable";
 import { useGetLanguages } from "@/features/languages/api/getLanguages";
 import { LanguagesTable } from "@/features/languages/components/LanguagesTable";
 import { CvsTableToolbar } from "@/features/shared/ui/CvsTableToolbar";
+import { Preloader } from "@/components/ui/Preloader";
 
 export type columnOptions = "name" | "native_name" | "iso2";
 
@@ -18,7 +19,7 @@ export const columnNames: {
 ];
 
 export const LanguagesPage = () => {
-  const { data } = useGetLanguages();
+  const { data, loading } = useGetLanguages();
   const allLanguages = data?.languages || [];
 
   const { processedData, search, setSearch, handleSort } = useSortTable(
@@ -29,6 +30,7 @@ export const LanguagesPage = () => {
 
   return (
     <>
+      <Preloader loading={loading} />
       <CvsTableToolbar value={search} onChange={setSearch} />
       <LanguagesTable
         columnNames={columnNames}

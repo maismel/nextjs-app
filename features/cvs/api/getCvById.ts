@@ -3,6 +3,7 @@ import { useQuery } from "@apollo/client/react";
 
 interface GetCvResp {
   cv: {
+    id: string;
     name: string;
     education: string;
     description: string;
@@ -16,6 +17,7 @@ interface GetCvArgs {
 const GET_CV = gql`
   query GetCv($cvId: ID!) {
     cv(cvId: $cvId) {
+      id
       name
       education
       description

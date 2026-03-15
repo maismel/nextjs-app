@@ -34,7 +34,15 @@ export const CvForm = ({
 }: CvFormProps) => {
   const [form, setForm] = useState(initialValues);
 
-  const isDisabled = !form.name.trim() || !form.description.trim();
+  const isChanged =
+    form.name.trim() !== initialValues.name.trim() ||
+    form.education?.trim() !== initialValues.education?.trim() ||
+    form.description.trim() !== initialValues.description.trim();
+    
+  const isDisabled =
+    !form.name.trim() ||
+    !form.description.trim() ||
+    (buttonText === "Update" && !isChanged);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,

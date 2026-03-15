@@ -23,7 +23,7 @@ export const UserSkills = ({
           <div className="flex flex-wrap gap-4">
             {skills.map((skill) => (
               <div
-                key={skill.categoryId}
+                key={`${skill.categoryId}-${skill.name}`}
                 className="px-3 py-1 rounded-full text-sm flex items-center gap-2 cursor-pointer"
                 onClick={() =>
                   onSkillClick({

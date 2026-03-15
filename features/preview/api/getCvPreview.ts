@@ -8,6 +8,7 @@ interface GetCvPreviewArgs {
 
 export interface GetCvPreviewResponse {
   cv: {
+    id: string;
     name: string;
     education: string;
     description: string;
@@ -29,6 +30,7 @@ export interface GetCvPreviewResponse {
     }[];
 
     user: {
+      id: string;
       position_name: string;
       profile: {
         full_name?: string;
@@ -40,6 +42,7 @@ export interface GetCvPreviewResponse {
 const GET_CV_PREVIEW = gql`
   query GetCvPreview($cvId: ID!) {
     cv(cvId: $cvId) {
+      id
       name
       education
       description
@@ -58,6 +61,7 @@ const GET_CV_PREVIEW = gql`
         environment
       }
       user {
+        id
         position_name
         profile {
           full_name

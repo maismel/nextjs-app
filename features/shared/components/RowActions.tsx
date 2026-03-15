@@ -32,8 +32,8 @@ export const RowActions = ({ id, actions }: RowActionsProps) => {
 
       {actions.length > 0 && (
         <DropdownMenuContent align="end">
-          {actions.map((action, index) => (
-            <div key={index}>
+          {actions.map((action) => (
+            <div key={action.label}>
               {action.showSeparatorBefore && <DropdownMenuSeparator />}
               <DropdownMenuItem
                 variant={action.variant}

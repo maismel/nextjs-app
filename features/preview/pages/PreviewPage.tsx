@@ -8,11 +8,17 @@ import { ProjectPreview } from "@/features/preview/components/ProjectPreview";
 import { SkillsTable } from "@/features/preview/components/SkillsTable";
 import { useGetSkills } from "@/features/skills/api/getSkills";
 import { groupUserSkills } from "@/features/skills/helpers/groupUserSkills";
+import { useGetProfileLanguages } from "@/features/users/languages/api/getProfileLanguages";
+import { copyStylesRecursive } from "@/helpers/copyStylesRecursive";
+import { getUserIdFromToken } from "@/helpers/getUserIdFromToken";
+import { openPdfFromBase64 } from "@/helpers/openPdfFromBase64";
 import { useParams } from "next/navigation";
 
 export const PreviewPage = () => {
   const { cvId } = useParams<{ cvId: string }>();
+  const userId = getUserIdFromToken()
   const { data: allSkills } = useGetSkills();
+  const { data: userLangs } = useGetProfileLanguages(String(userId));
   const { data } = useGetCvPreview(cvId);
   const [exportPdf] = useExportPdf()
 
@@ -24,26 +30,47 @@ export const PreviewPage = () => {
   const groupedUserSkills = groupUserSkills(allSkillsList, userSkillsList);
 
   const handleExport = async () => {
-    const html = document.getElementById("cv-content")?.innerHTML;
+    const cvElement = document.getElementById("cv-content");
+    if (!cvElement) return;
 
-    if (!html) return;
+    const cloneElement = cvElement.cloneNode(true) as HTMLElement;
+
+    copyStylesRecursive(cvElement, cloneElement);
+
+    const html = `
+    <html>
+      <head>
+        <style>
+          body {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+            background: white;
+            color: black;
+          }
+          * { box-sizing: border-box; }
+        </style>
+      </head>
+      <body>
+        ${cloneElement.outerHTML}
+      </body>
+    </html>
+  `;
 
     const { data, error } = await exportPdf({
       variables: {
         pdf: {
           html,
-          margin: {
-            top: '10',
-            bottom: '10',
-            left: '10',
-            right: '10',
-          },
+          margin: { top: "10", bottom: "10", left: "10", right: "10" },
         },
       },
     });
 
-    console.log("error", error);
-    console.log("PDF result:", data?.exportPdf);
+    if (data?.exportPdf) {
+      openPdfFromBase64(data.exportPdf, "resume.pdf");
+    }
+
+    if (error) console.log("PDF export error:", error);
   };
 
   return (
@@ -56,6 +83,7 @@ export const PreviewPage = () => {
         education={cvData?.education}
         name={cvData?.name}
         description={cvData?.description}
+        languages={userLangs?.profile.languages}
       />
       <article className="flex flex-col gap-8">
         <h1 className="text-3xl">Projects</h1>

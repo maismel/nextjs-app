@@ -2,8 +2,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { AddCvProjectInput, Project } from "cv-graphql";
-import { useState } from "react";
+import { AddCvProjectInput, CvProject } from "cv-graphql";
+import { useMemo, useState } from "react";
 import { DateInput } from "@/features/shared/components/DateInput";
 import { format } from "date-fns";
 
@@ -17,7 +17,7 @@ type FormState = {
 interface ProjectFormProps {
   onSubmit: (values: Omit<AddCvProjectInput, "cvId" | "projectId">) => void;
   onCancel: () => void;
-  projectData?: Omit<Project, "internal_name">;
+  projectData?: Partial<CvProject>;
 }
 
 export const ProjectForm = ({
@@ -25,14 +25,27 @@ export const ProjectForm = ({
   onCancel,
   projectData,
 }: ProjectFormProps) => {
-  const [form, setForm] = useState<FormState>({
-    start_date: undefined,
-    end_date: undefined,
-    roles: "",
-    responsibilities: "",
-  });
+  const initialForm = useMemo(
+    () => ({
+      start_date: projectData?.start_date
+        ? new Date(projectData.start_date)
+        : undefined,
+      end_date: projectData?.end_date
+        ? new Date(projectData.end_date)
+        : undefined,
+      roles: projectData?.roles?.join(", ") || "",
+      responsibilities: projectData?.responsibilities?.join(", ") || "",
+    }),
+    [projectData],
+  );
+  const [form, setForm] = useState<FormState>(initialForm);
 
   const isNotEmpty = (v: string) => v.trim().length > 0;
+  const isChanged =
+    form.start_date?.toISOString() !== initialForm.start_date?.toISOString() ||
+    form.end_date?.toISOString() !== initialForm.end_date?.toISOString() ||
+    form.roles.trim() !== initialForm.roles.trim() ||
+    form.responsibilities.trim() !== initialForm.responsibilities.trim();
 
   const isDateRangeValid =
     !form.start_date || !form.end_date || form.start_date <= form.end_date;
@@ -41,7 +54,8 @@ export const ProjectForm = ({
     !!form.start_date &&
     isNotEmpty(form.roles) &&
     isNotEmpty(form.responsibilities) &&
-    isDateRangeValid;
+    isDateRangeValid &&
+    isChanged;
 
   const updateField = (
     field: keyof FormState,
@@ -184,7 +198,7 @@ export const ProjectForm = ({
           size="lg"
           className="w-40"
         >
-          Add
+          Save
         </Button>
       </div>
     </form>

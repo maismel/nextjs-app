@@ -19,7 +19,6 @@ export const PreviewPage = () => {
   const userId = getUserIdFromToken()
   const { data: allSkills } = useGetSkills();
   const { data: userLangs } = useGetProfileLanguages(String(userId));
-  console.log("userLangs", userLangs?.profile.languages);
   const { data } = useGetCvPreview(cvId);
   const [exportPdf] = useExportPdf()
 

@@ -4,7 +4,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { ProjectCvForm } from "@/features/projects/components/ProjectCvForm";
+import { useGetUserProjects } from "@/features/projects/api/getUserProjects";
+import { ProjectForm } from "@/features/projects/components/ProjectForm";
 import { useProjectActions } from "@/features/projects/hooks/useProjectActions";
 import { useParams } from "next/navigation";
 
@@ -20,26 +21,31 @@ export const UpdateProjectDialog = ({
   selectedProject,
 }: UpdateProjectDialogProps) => {
   const { cvId } = useParams<{ cvId: string }>();
+  const { data: projectsData } = useGetUserProjects(cvId);
   const { handleUpdateCvProject } = useProjectActions();
+
+  const allProjects = projectsData?.cv.projects;
+  const selectedProjectData = allProjects?.find(
+    (project) => project.id === selectedProject,
+  );
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="lg:max-w-4xl">
+      <DialogContent className="lg:max-w-4xl h-[80vh] flex flex-col overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Update Project</DialogTitle>
         </DialogHeader>
-        <ProjectCvForm
+        <ProjectForm
           onCancel={() => onOpenChange(false)}
           onSubmit={(values) => {
-            console.log("values", values);
-            console.log("cvId", cvId);
-            console.log("selectedProject", selectedProject);
             handleUpdateCvProject({
               cvId,
               projectId: selectedProject,
               ...values,
             });
+            onOpenChange(false);
           }}
+          projectData={selectedProjectData}
         />
       </DialogContent>
     </Dialog>

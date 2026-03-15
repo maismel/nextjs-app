@@ -18,8 +18,8 @@ export const CvHeader = ({ user, onExport }: CvHeaderProps) => {
 
       <Button
         size="lg"
-        variant="outline"
-        className="flex gap-2 items-center cursor-pointer"
+        variant="ghost"
+        className="flex gap-2 items-center border border-destructive text-destructive hover:bg-destructive/10 cursor-pointer"
         onClick={onExport}
       >
         EXPORT PDF

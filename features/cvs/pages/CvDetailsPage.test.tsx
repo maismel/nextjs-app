@@ -14,7 +14,7 @@ jest.mock("@/features/cvs/hooks/useCvsActions", () => ({
 
 jest.mock("@/features/cvs/api/getCvById", () => ({
   useGetCvById: jest.fn(() => ({
-    data: { cv: { name: "Alice", education: "BSc", description: "Frontend" } },
+    data: { cv: { id: '1', name: "Alice", education: "BSc", description: "Frontend" } },
     loading: false,
   })),
 }));

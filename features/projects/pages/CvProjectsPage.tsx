@@ -13,7 +13,7 @@ import { Preloader } from "@/components/ui/Preloader";
 
 export type columnOptions = "name" | "domain" | "start_date" | "end_date";
 
-const columnNames: {
+export const columnNames: {
   label: string;
   key: columnOptions;
   sortable: boolean;
@@ -34,8 +34,12 @@ export const CvProjectsPage = () => {
   const [projectToUpdate, setProjectToUpdate] = useState("");
   const userProjects = data?.cv.projects ?? [];
 
+  const normalizedProjects = userProjects.map((p) => ({
+    ...p,
+    end_date: p.end_date ?? undefined,
+  }));
   const { processedData, search, setSearch, handleSort } = useSortTable(
-    userProjects,
+    normalizedProjects,
     "name",
     ["name", "domain"],
   );

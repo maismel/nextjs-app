@@ -91,6 +91,8 @@ export const AllProjectsTable = ({
                           {
                             label: "Remove Project",
                             onClick: onDelete,
+                            variant: "destructive" as const,
+                            showSeparatorBefore: true,
                           },
                         ]
                       : []),

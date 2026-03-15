@@ -2,9 +2,17 @@ import { render, screen } from "@testing-library/react";
 import { AppSidebar } from "./AppSidebar";
 
 const mockUsePathname = jest.fn();
+const mockReplace = jest.fn();
 
 jest.mock("next/navigation", () => ({
   usePathname: () => mockUsePathname(),
+  useRouter: () => ({
+    replace: mockReplace,
+  }),
+}));
+
+jest.mock("@/features/shared/hooks/useIsClient", () => ({
+  useIsClient: () => true,
 }));
 
 jest.mock("@/helpers/getUserIdFromToken", () => ({
@@ -35,6 +43,10 @@ jest.mock("@/features/navigation/components/SidebarLg", () => ({
 
 jest.mock("@/features/navigation/components/MobileNav", () => ({
   MobileNav: () => <div data-testid="mobile-nav">MobileNav</div>,
+}));
+
+jest.mock("@/features/shared/components/ConfirmDialog", () => ({
+  ConfirmDialog: () => <div data-testid="confirm-dialog" />,
 }));
 
 describe("AppSidebar", () => {

@@ -25,7 +25,7 @@ describe("ConfirmDialog", () => {
       screen.getByText("Are you sure you want to delete?"),
     ).toBeInTheDocument();
     expect(screen.getByText("Cancel")).toBeInTheDocument();
-    expect(screen.getByText("Delete")).toBeInTheDocument();
+    expect(screen.getByText("Confirm")).toBeInTheDocument();
   });
 
   test("uses default description when none provided", () => {
@@ -69,7 +69,7 @@ describe("ConfirmDialog", () => {
       />,
     );
 
-    fireEvent.click(screen.getByText("Delete"));
+    fireEvent.click(screen.getByText("Confirm"));
 
     expect(mockOnConfirm).toHaveBeenCalled();
     expect(mockOnOpenChange).toHaveBeenCalledWith(false);

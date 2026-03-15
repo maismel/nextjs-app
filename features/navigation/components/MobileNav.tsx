@@ -1,15 +1,18 @@
+import { Button } from "@/components/ui/button";
+import { ChevronLeftIcon } from "lucide-react";
 import Link from "next/link";
 import { JSX } from "react/jsx-dev-runtime";
 
 interface MobileNavProps {
-  navItems: { label: string; href: string, icon: JSX.Element }[];
+  navItems: { label: string; href: string; icon: JSX.Element }[];
   pathname: string;
+  onLogout: () => void;
 }
 
-export function MobileNav({ navItems, pathname }: MobileNavProps) {
+export function MobileNav({ navItems, pathname, onLogout }: MobileNavProps) {
   return (
-    <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 border-t">
-      <div className="flex justify-between py-2 px-4">
+    <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 border-t bg-accent">
+      <div className="flex justify-between items-center py-2 px-4">
         {navItems.map((item) => {
           const active = pathname === item.href;
           return (
@@ -25,6 +28,13 @@ export function MobileNav({ navItems, pathname }: MobileNavProps) {
             </Link>
           );
         })}
+        <Button
+          variant="ghost"
+          className="text-muted-foreground flex justify-start"
+          onClick={onLogout}
+        >
+          <ChevronLeftIcon />
+        </Button>
       </div>
     </div>
   );

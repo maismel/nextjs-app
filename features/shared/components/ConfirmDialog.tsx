@@ -51,7 +51,7 @@ export const ConfirmDialog = ({
               onOpenChange(false);
             }}
           >
-            Delete
+            Confirm
           </Button>
         </DialogFooter>
       </DialogContent>
